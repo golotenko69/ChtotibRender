@@ -4,7 +4,6 @@
 {% block content %}
 <section class="page-hero" style="min-height:80vh;display:flex;align-items:center;">
     <div class="page-hero__floor" aria-hidden="true"></div>
-    <div class="confetti" data-confetti aria-hidden="true"></div>
     <div class="orb orb--mint" aria-hidden="true" style="left:50%;top:10%;width:600px;height:600px;margin-left:-300px;"></div>
     <div class="container narrow success-page">
         <div class="success-page__icon" data-reveal="zoom">
@@ -14,8 +13,8 @@
         <p class="success-page__number" data-reveal style="--d:.3s">№ {{ object.request_number }}</p>
         <p data-reveal style="--d:.4s;max-width:560px;margin:0 auto 28px;">Спасибо! Ваша заявка на {{ kind }} принята{% if object.phone %}. Мы свяжемся с вами по телефону {{ object.phone }}{% endif %}, чтобы уточнить детали, стоимость и сроки.</p>
         <div data-reveal style="--d:.5s">
-            <a href="{% url 'core:home' %}" class="btn btn--primary" data-magnetic>На главную</a>
-            <a href="{% url 'products:catalog' %}" class="btn btn--outline" data-magnetic>В каталог</a>
+            <a href="{% url 'core:home' %}" class="btn btn--primary">На главную</a>
+            <a href="{% url 'products:catalog' %}" class="btn btn--outline">В каталог</a>
         </div>
     </div>
 </section>

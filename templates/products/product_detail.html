@@ -49,7 +49,7 @@
                         <input type="number" id="qty" name="quantity" value="1" min="1" aria-label="Количество">
                         <button type="button" data-step="1" aria-label="Больше">+</button>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--lg" style="flex:1;" {% if not product.is_in_stock %}disabled{% endif %} data-magnetic>Добавить в заявку</button>
+                    <button type="submit" class="btn btn--primary btn--lg" style="flex:1;" {% if not product.is_in_stock %}disabled{% endif %}>Добавить в заявку</button>
                 </form>
                 <div class="spec-list" data-reveal style="--d:.4s">
                     <div><span>Артикул</span><b>{{ product.sku }}</b></div>

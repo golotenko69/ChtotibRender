@@ -2,7 +2,6 @@
     "use strict";
 
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
     function formatSize(bytes) {
         if (bytes < 1024) return bytes + " Б";
@@ -129,36 +128,6 @@
         });
     }
 
-    // Wraps each word of [data-split] headings so they rise one by one.
-    function initSplitWords() {
-        document.querySelectorAll("[data-split]").forEach(function (el) {
-            var i = 0;
-            function walk(node) {
-                Array.prototype.slice.call(node.childNodes).forEach(function (child) {
-                    if (child.nodeType === 3) {
-                        var parts = child.textContent.split(/(\s+)/);
-                        var frag = document.createDocumentFragment();
-                        parts.forEach(function (part) {
-                            if (!part) return;
-                            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
-                            var w = document.createElement("span");
-                            w.className = "w";
-                            var inner = document.createElement("span");
-                            inner.style.setProperty("--i", i++);
-                            inner.textContent = part;
-                            w.appendChild(inner);
-                            frag.appendChild(w);
-                        });
-                        child.parentNode.replaceChild(frag, child);
-                    } else if (child.nodeType === 1) {
-                        walk(child);
-                    }
-                });
-            }
-            walk(el);
-        });
-    }
-
     // Reveal-on-scroll. Siblings revealed in the same batch get a stagger so
     // grids "print" in one card after another.
     function initReveal() {
@@ -205,176 +174,35 @@
         });
     }
 
-    // Scroll-linked effects batched into one rAF: print progress bar,
-    // parallax orbs and the manifesto line/words.
-    function initScrollFx() {
-        var bar = document.querySelector(".print-progress");
-        var parallax = reduceMotion ? [] : Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
-        var manifesto = document.querySelector("[data-manifesto]");
-        var words = [];
-        var line = manifesto && manifesto.querySelector(".manifesto__line path");
-
-        if (manifesto) {
-            var text = manifesto.querySelector("[data-words]");
-            Array.prototype.slice.call(text.childNodes).forEach(function (node) {
-                var frag = document.createDocumentFragment();
-                var extraCls = node.nodeType === 1 ? " " + node.className : "";
-                node.textContent.split(/(\s+)/).forEach(function (part) {
-                    if (!part) return;
-                    if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
-                    var s = document.createElement("span");
-                    s.className = "word" + extraCls;
-                    s.textContent = part;
-                    words.push(s);
-                    frag.appendChild(s);
-                });
-                text.replaceChild(frag, node);
-            });
-        }
-
-        var ticking = false;
-        function update() {
-            ticking = false;
-            var y = window.scrollY;
-            var vh = window.innerHeight;
-            var max = document.documentElement.scrollHeight - vh;
-            if (bar) bar.style.setProperty("--progress", max > 0 ? (y / max).toFixed(4) : 0);
-            parallax.forEach(function (el) {
-                el.style.transform = "translate3d(0," + (y * parseFloat(el.getAttribute("data-parallax"))).toFixed(1) + "px,0)";
-            });
-            if (manifesto) {
-                var r = manifesto.getBoundingClientRect();
-                var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height * 0.8)));
-                if (reduceMotion) p = 1;
-                if (line) line.style.setProperty("--p", p.toFixed(3));
-                var lit = Math.round(p * words.length * 1.15);
-                words.forEach(function (w, idx) { w.classList.toggle("is-lit", idx < lit); });
-            }
-        }
-        window.addEventListener("scroll", function () {
-            if (!ticking) { ticking = true; requestAnimationFrame(update); }
-        }, { passive: true });
-        window.addEventListener("resize", update);
-        update();
-    }
-
-    // Hero rig leans toward the cursor for a sense of depth.
-    function initHeroTilt() {
-        var stage = document.querySelector("[data-hero-stage]");
-        if (!stage || reduceMotion || !finePointer) return;
-        var rig = stage.querySelector(".hero__rig");
-        var hero = stage.closest(".hero");
-        hero.addEventListener("mousemove", function (e) {
-            var r = stage.getBoundingClientRect();
-            var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
-            var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-            rig.style.setProperty("--rx", (dx * 14).toFixed(2) + "deg");
-            rig.style.setProperty("--ry", (-dy * 10).toFixed(2) + "deg");
-        });
-        hero.addEventListener("mouseleave", function () {
-            rig.style.setProperty("--rx", "0deg");
-            rig.style.setProperty("--ry", "0deg");
-        });
-    }
-
     // Live layer counter in the hero chip, synced to the 9s print loop.
     function initLayerCounter() {
         var el = document.querySelector("[data-layer-counter]");
         if (!el || reduceMotion) return;
-        var start = performance.now();
-        function frame(now) {
-            var t = ((now - start) / 9000) % 1;
-            var p = Math.min(1, t / 0.68);
-            el.textContent = Math.round(p * 640);
-            requestAnimationFrame(frame);
-        }
-        requestAnimationFrame(frame);
-    }
-
-    // Product cards tilt in 3D and carry a glare that follows the cursor.
-    function initTilt() {
-        if (reduceMotion || !finePointer) return;
-        document.querySelectorAll("[data-tilt]").forEach(function (card) {
-            card.addEventListener("mousemove", function (e) {
-                var r = card.getBoundingClientRect();
-                var px = (e.clientX - r.left) / r.width;
-                var py = (e.clientY - r.top) / r.height;
-                card.classList.add("is-tilting");
-                card.style.setProperty("--ry", ((px - 0.5) * 12).toFixed(2) + "deg");
-                card.style.setProperty("--rx", ((0.5 - py) * 10).toFixed(2) + "deg");
-                card.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
-                card.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
-            });
-            card.addEventListener("mouseleave", function () {
-                card.classList.remove("is-tilting");
-                card.style.setProperty("--rx", "0deg");
-                card.style.setProperty("--ry", "0deg");
-            });
-        });
-    }
-
-    // Soft spotlight that tracks the pointer across glass cards.
-    function initSpotlight() {
-        if (!finePointer) return;
-        document.querySelectorAll("[data-spotlight]").forEach(function (el) {
-            el.addEventListener("mousemove", function (e) {
-                var r = el.getBoundingClientRect();
-                el.style.setProperty("--gx", (e.clientX - r.left) + "px");
-                el.style.setProperty("--gy", (e.clientY - r.top) + "px");
-            });
-        });
-    }
-
-    // Buttons drift toward the cursor a little.
-    function initMagnetic() {
-        if (reduceMotion || !finePointer) return;
-        document.querySelectorAll("[data-magnetic]").forEach(function (btn) {
-            btn.addEventListener("mousemove", function (e) {
-                var r = btn.getBoundingClientRect();
-                var x = e.clientX - (r.left + r.width / 2);
-                var y = e.clientY - (r.top + r.height / 2);
-                btn.style.transform = "translate(" + (x * 0.18).toFixed(1) + "px," + (y * 0.28).toFixed(1) + "px)";
-            });
-            btn.addEventListener("mouseleave", function () { btn.style.transform = ""; });
-        });
-    }
-
-    function initRipple() {
-        document.addEventListener("pointerdown", function (e) {
-            var btn = e.target.closest(".btn");
-            if (!btn || reduceMotion) return;
-            var r = btn.getBoundingClientRect();
-            var size = Math.max(r.width, r.height);
-            var dot = document.createElement("span");
-            dot.className = "ripple";
-            dot.style.width = dot.style.height = size + "px";
-            dot.style.left = (e.clientX - r.left - size / 2) + "px";
-            dot.style.top = (e.clientY - r.top - size / 2) + "px";
-            btn.appendChild(dot);
-            setTimeout(function () { dot.remove(); }, 700);
-        });
-    }
-
-    function initCursorGlow() {
-        var glow = document.querySelector(".cursor-glow");
-        if (!glow || !finePointer || reduceMotion) { if (glow) glow.remove(); return; }
-        var tx = -999, ty = -999, cx = tx, cy = ty, running = false;
-        function loop() {
-            cx += (tx - cx) * 0.12;
-            cy += (ty - cy) * 0.12;
-            glow.style.setProperty("--cx", cx.toFixed(1) + "px");
-            glow.style.setProperty("--cy", cy.toFixed(1) + "px");
-            if (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) requestAnimationFrame(loop);
-            else running = false;
-        }
-        window.addEventListener("mousemove", function (e) {
-            tx = e.clientX; ty = e.clientY;
-            if (cx === -999) { cx = tx; cy = ty; }
-            if (!running) { running = true; requestAnimationFrame(loop); }
-        }, { passive: true });
+        var start = Date.now();
+        setInterval(function () {
+            if (document.hidden) return;
+            var t = ((Date.now() - start) / 9000) % 1;
+            el.textContent = Math.round(Math.min(1, t / 0.68) * 640);
+        }, 250);
     }
 
     // Numbers count up when they scroll into view.
+    // Thin "print progress" bar tracks how far the page is scrolled.
+    function initProgress() {
+        var bar = document.querySelector(".print-progress");
+        if (!bar) return;
+        var ticking = false;
+        function update() {
+            ticking = false;
+            var max = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.setProperty("--progress", max > 0 ? (window.scrollY / max).toFixed(4) : 0);
+        }
+        window.addEventListener("scroll", function () {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        update();
+    }
+
     function initCounters() {
         var els = document.querySelectorAll("[data-count]");
         if (!els.length || reduceMotion || !("IntersectionObserver" in window)) return;
@@ -457,21 +285,6 @@
         });
     }
 
-    function initConfetti() {
-        var host = document.querySelector("[data-confetti]");
-        if (!host || reduceMotion) return;
-        var colors = ["#FF8A3D", "#FFB066", "#5FD4C4", "#9BE7DC", "#EEF2F1"];
-        for (var i = 0; i < 60; i++) {
-            var c = document.createElement("i");
-            c.style.left = Math.random() * 100 + "%";
-            c.style.background = colors[i % colors.length];
-            c.style.animationDelay = (Math.random() * 1.2) + "s";
-            c.style.animationDuration = (2.4 + Math.random() * 1.8) + "s";
-            c.style.transform = "rotate(" + Math.random() * 360 + "deg)";
-            host.appendChild(c);
-        }
-    }
-
     function initCartBump() {
         var count = document.querySelector(".navbar__cart-count");
         if (!count || !document.querySelector(".alert--success")) return;
@@ -483,22 +296,14 @@
         initNavbarScroll();
         initNavPill();
         initFaqAccordion();
-        initSplitWords();
         initFooterWord();
         initReveal();
-        initScrollFx();
-        initHeroTilt();
+        initProgress();
         initLayerCounter();
-        initTilt();
-        initSpotlight();
-        initMagnetic();
-        initRipple();
-        initCursorGlow();
         initCounters();
         initRail();
         initQty();
         initGallery();
-        initConfetti();
         initCartBump();
 
         // Auto-dismiss alerts after a few seconds.
