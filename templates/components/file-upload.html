@@ -4,9 +4,9 @@ Drag-and-drop file upload zone. Include with:
 {% endcomment %}
 <div class="upload-zone" id="{{ zone_id }}" data-upload-zone>
     <div class="upload-zone__drop" data-upload-drop>
-        <div class="upload-zone__icon">⬆</div>
+        <div class="upload-zone__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></div>
         <p><strong>Перетащите файл сюда</strong></p>
-        <p class="upload-zone__hint">или выберите файл {% if hint %}({{ hint }}){% endif %}</p>
+        <p class="upload-zone__hint">или нажмите, чтобы выбрать{% if hint %} · {{ hint }}{% endif %}</p>
         {{ field }}
     </div>
     <ul class="upload-zone__list" data-upload-list></ul>

@@ -1,36 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Контакты — Чтотиб Render{% endblock %}
 {% block content %}
-<section class="section section--dark" style="position:relative;overflow:hidden;padding:64px 0;">
-    <div class="texture-overlay fdm-layers"></div>
-    <div class="texture-overlay blueprint-grid"></div>
-    <div class="container narrow" style="position:relative;">
-        <span class="section-label">06 / Контакты</span>
-        <h1 style="color:#fff;">Свяжитесь с нами</h1>
-        <p style="color:rgba(255,255,255,.6);">Опишите задачу или прикрепите файл модели — рассчитаем стоимость и ответим в течение часа.</p>
+<section class="page-hero">
+    <div class="page-hero__floor" aria-hidden="true"></div>
+    <div class="orb orb--mint" aria-hidden="true" style="right:6%;top:30px;width:560px;height:560px;"></div>
+    <div class="container">
+        <span class="section-label" data-reveal>Контакты</span>
+        <h1 class="split-words" data-split>Свяжитесь <span class="serif">с нами</span></h1>
+        <p data-reveal style="--d:.3s">Опишите задачу или прикрепите файл модели — рассчитаем стоимость и ответим в течение часа.</p>
     </div>
 </section>
-<section class="section section--white">
-    <div class="container narrow">
+<section class="section" style="padding-top:10px;">
+    <div class="container">
         <div class="contact-grid">
-            <div>
+            <div class="glass contact-card" data-reveal data-spotlight>
                 <h3>Телефон</h3>
-                <p><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
+                <a href="tel:+79000000000">+7 (900) 000-00-00</a>
             </div>
-            <div>
+            <div class="glass contact-card" data-reveal data-spotlight style="--d:.08s">
                 <h3>Email</h3>
-                <p><a href="mailto:hello@3dprint.example">hello@3dprint.example</a></p>
+                <a href="mailto:hello@3dprint.example">hello@3dprint.example</a>
             </div>
-            <div>
+            <div class="glass contact-card" data-reveal data-spotlight style="--d:.16s">
                 <h3>Адрес</h3>
                 <p>г. Москва, ул. Примерная, д. 1</p>
             </div>
-            <div>
+            <div class="glass contact-card" data-reveal data-spotlight style="--d:.24s">
                 <h3>Режим работы</h3>
                 <p>Пн–Пт: 10:00–19:00</p>
             </div>
         </div>
-        <p class="section__lead">Есть проект? <a href="{% url 'print_requests:form' %}">Закажите печать модели</a> или <a href="{% url 'scanning:form' %}">3D-сканирование</a>.</p>
+        <div class="glass cta-band" data-reveal="zoom" style="margin-top:20px;">
+            <div class="cta-band__layers" aria-hidden="true"></div>
+            <div style="position:relative;">
+                <h2>Есть проект? <span class="serif">Начнём</span></h2>
+                <p style="margin:0;">Закажите печать модели или 3D-сканирование — без регистрации.</p>
+            </div>
+            <div class="cta-band__actions">
+                <a href="{% url 'print_requests:form' %}" class="btn btn--primary btn--lg" data-magnetic>Печать модели</a>
+                <a href="{% url 'scanning:form' %}" class="btn btn--outline btn--lg" data-magnetic>3D-сканирование</a>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

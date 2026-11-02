@@ -1,168 +1,262 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}3D-печать и 3D-сканирование: от идеи до готовой детали{% endblock %}
+{% block title %}Чтотиб Render — 3D-печать и 3D-сканирование: от идеи до готовой детали{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="texture-overlay fdm-layers"></div>
-    <div class="texture-overlay blueprint-grid"></div>
-    <div style="position:absolute;top:64px;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,122,26,.5),transparent);"></div>
+<section class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true">
+        <div class="hero__floor"></div>
+        <div class="orb orb--amber" style="right:6%;top:40px;width:640px;height:640px;" data-parallax="0.15"></div>
+        <div class="orb orb--mint" style="left:-8%;top:200px;width:520px;height:520px;" data-parallax="-0.1"></div>
+    </div>
 
     <div class="container hero__grid">
-        <div>
-            <p class="hero__eyebrow">Печать · Сканирование · Изготовление на заказ</p>
-            <h1>3D-печать и 3D-сканирование: <span class="accent">от идеи до готовой детали</span></h1>
-            <p class="hero__subtitle">Готовые изделия, печать ваших моделей и профессиональное 3D-сканирование — без регистрации, без личного кабинета.</p>
-
-            <div class="hero__actions">
-                <a href="{% url 'products:catalog' %}" class="btn btn--primary btn--lg">Смотреть каталог →</a>
-                <a href="{% url 'print_requests:form' %}" class="btn btn--outline-light btn--lg">Заказать печать</a>
-                <a href="{% url 'scanning:form' %}" class="btn btn--outline-light btn--lg">3D-сканирование</a>
+        <div class="hero__copy">
+            <span class="section-label hero__eyebrow" data-reveal>Мастерская 3D-печати · слой 0.2 мм</span>
+            <h1 class="split-words" data-split>3D-печать, которую можно <span class="serif">взять в&nbsp;руки</span></h1>
+            <p class="hero__subtitle" data-reveal style="--d:.35s">Готовые изделия, печать ваших моделей и 3D-сканирование объектов — от одного экземпляра, без регистрации и личных кабинетов.</p>
+            <div class="hero__actions" data-reveal style="--d:.5s">
+                <a href="{% url 'products:catalog' %}" class="btn btn--primary btn--lg" data-magnetic>Открыть каталог
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a href="{% url 'print_requests:form' %}" class="btn btn--outline btn--lg" data-magnetic>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Напечатать своё</a>
             </div>
-
-            <div class="hero__stats">
-                <div><div class="hero__stat-val">500+</div><div class="hero__stat-label">Заявок выполнено</div></div>
-                <div><div class="hero__stat-val">10+</div><div class="hero__stat-label">Материалов в наличии</div></div>
-                <div><div class="hero__stat-val">24ч</div><div class="hero__stat-label">Минимальный срок</div></div>
+            <div class="hero__chips" data-reveal style="--d:.65s">
+                <a href="{% url 'products:catalog' %}" class="chip">Готовые изделия</a>
+                <a href="{% url 'print_requests:form' %}" class="chip">Печать по файлу</a>
+                <a href="{% url 'scanning:form' %}" class="chip">3D-сканирование</a>
+                <a href="{% url 'core:contact' %}" class="chip">Консультация</a>
             </div>
         </div>
 
-        <div class="hero__visual">
-            <div style="position:relative;width:320px;height:320px;">
-                <svg viewBox="0 0 300 300" style="width:100%;height:100%;" aria-hidden="true">
-                    <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
-                    <circle cx="150" cy="150" r="110" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
-                    <polygon points="150,34 252,90 150,146 48,90" fill="#4A7A88" />
-                    <polygon points="48,90 150,146 150,256 48,200" fill="#1F3A42" />
-                    <polygon points="252,90 252,200 150,256 150,146" fill="#FF7A1A" />
-                    <polygon points="150,34 252,90 150,146 48,90" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
-                    <polygon points="48,90 150,146 150,256 48,200" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" />
-                    <polygon points="252,90 252,200 150,256 150,146" fill="none" stroke="rgba(255,122,26,0.25)" stroke-width="1" />
-                    <line x1="221" y1="103" x2="150" y2="103" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="207" y1="116" x2="150" y2="116" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="193" y1="129" x2="150" y2="129" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="179" y1="142" x2="150" y2="142" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="165" y1="155" x2="150" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="151" y1="168" x2="150" y2="168" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="181" x2="150" y2="181" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="194" x2="150" y2="194" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="207" x2="150" y2="207" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="220" x2="150" y2="220" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="233" x2="150" y2="233" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="246" x2="150" y2="246" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" />
-                    <line x1="150" y1="146" x2="150" y2="34" stroke="rgba(255,255,255,0.18)" stroke-width="0.6" stroke-dasharray="5,4" />
-                    <line x1="150" y1="146" x2="48" y2="90" stroke="rgba(255,255,255,0.14)" stroke-width="0.6" stroke-dasharray="5,4" />
-                    <line x1="150" y1="146" x2="252" y2="90" stroke="rgba(255,122,26,0.28)" stroke-width="0.6" stroke-dasharray="5,4" />
-                    <text x="150" y="22" fill="rgba(255,255,255,0.35)" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="middle">Z</text>
-                    <text x="36" y="89" fill="rgba(255,255,255,0.3)" font-size="11" font-family="'JetBrains Mono',monospace" text-anchor="end">Y</text>
-                    <text x="264" y="89" fill="rgba(255,122,26,0.5)" font-size="11" font-family="'JetBrains Mono',monospace">X</text>
-                    <circle cx="150" cy="34" r="3.5" fill="#FF7A1A" />
-                    <circle cx="252" cy="90" r="2.5" fill="#FF7A1A" opacity="0.55" />
-                    <circle cx="48" cy="90" r="2.5" fill="#4A7A88" opacity="0.55" />
-                    <circle cx="150" cy="256" r="2.5" fill="rgba(255,255,255,0.2)" />
-                </svg>
-                <div class="layer-chip">Слой 247 / 247 &nbsp;<span class="bar">██████████</span>&nbsp; 100%</div>
+        <div class="hero__stage" data-hero-stage>
+            <div class="hero__rig">
+                <div class="hero__halo" aria-hidden="true"></div>
+                <div class="hero__ring" aria-hidden="true"></div>
+                <div class="hero__ring hero__ring--2" aria-hidden="true"></div>
+
+                <div class="vase">
+                    <div class="vase__spin">
+                        <div class="vase__wrap">
+                            <svg role="img" aria-label="Витая ваза, печатается слой за слоем" viewBox="0 0 300 390" width="300" height="390">
+                                <defs>
+                                    <linearGradient id="vaseG" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#5FD4C4" stop-opacity=".85"/><stop offset=".16" stop-color="#2F5553"/><stop offset=".5" stop-color="#B9A58E"/><stop offset=".82" stop-color="#FF9C52"/><stop offset="1" stop-color="#FFC48A"/></linearGradient>
+                                    <pattern id="lay" width="6" height="4" patternUnits="userSpaceOnUse"><rect width="6" height="1.2" fill="rgba(10,18,22,.28)"/></pattern>
+                                </defs>
+                                <path d="M98 388 C70 330 46 270 70 210 C88 165 70 120 96 70 C104 52 106 30 102 4 L198 4 C194 30 196 52 204 70 C230 120 212 165 230 210 C254 270 230 330 202 388 Z" fill="url(#vaseG)"/>
+                                <path d="M98 388 C70 330 46 270 70 210 C88 165 70 120 96 70 C104 52 106 30 102 4 L198 4 C194 30 196 52 204 70 C230 120 212 165 230 210 C254 270 230 330 202 388 Z" fill="url(#lay)"/>
+                                <g fill="none" stroke="rgba(10,18,22,.22)" stroke-width="2"><path d="M120 388 C150 300 90 230 130 140 C150 90 120 50 128 4"/><path d="M150 388 C185 300 120 230 160 140 C180 90 150 50 156 4"/><path d="M180 388 C215 300 150 230 190 140 C205 90 180 50 182 4"/></g>
+                                <ellipse cx="150" cy="4" rx="48" ry="5" fill="#1A2A30" stroke="rgba(255,176,102,.6)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="vase__head" aria-hidden="true">
+                        <div class="vase__laser"></div>
+                        <div class="vase__sparks"><i></i><i></i><i></i><i></i></div>
+                        <div class="vase__nozzle">
+                            <svg width="40" height="58" viewBox="0 0 40 58"><rect x="4" y="0" width="32" height="26" rx="4" fill="#152730" stroke="rgba(255,255,255,.14)"/><path d="M12 26h16l-5 22h-6z" fill="#2A3A40"/><path d="M17 48h6l-1.5 8h-3z" fill="#FFB066"/><circle cx="20" cy="56" r="3" fill="#FFE0C2"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="podium" aria-hidden="true"></div>
+
+                <div class="glass mono float-card float-card--a" aria-hidden="true">
+                    <span class="live">Печать идёт</span>
+                    <span>Слой <b data-layer-counter>412</b> / 640</span>
+                    <span>PLA · 210 °C</span>
+                    <span class="mini-bar"><i></i></span>
+                </div>
+                <div class="glass mono float-card float-card--b" aria-hidden="true">
+                    <span>Ваза «Твист»</span>
+                    <span style="color:var(--amber-2)">PLA · 24 см · 9 ч</span>
+                </div>
+                <div class="glass mono float-card float-card--c" aria-hidden="true">
+                    <span style="color:var(--mint)">±0.2 мм</span>
+                    <span>точность</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="hero__scroll-hint"><span>SCROLL</span><i></i></div>
+    <div class="container trust-row">
+        <div class="glass trust" data-reveal style="--d:.1s">
+            <span class="trust__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span><span class="trust__val" data-count="500" data-suffix="+">500+</span><span class="trust__lbl">заявок выполнено</span></span>
+        </div>
+        <div class="glass trust" data-reveal style="--d:.2s">
+            <span class="trust__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+            <span><span class="trust__val" data-count="10" data-suffix="+">10+</span><span class="trust__lbl">материалов в наличии</span></span>
+        </div>
+        <div class="glass trust" data-reveal style="--d:.3s">
+            <span class="trust__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18"/></svg></span>
+            <span><span class="trust__val" data-count="24" data-suffix=" ч">24 ч</span><span class="trust__lbl">минимальный срок</span></span>
+        </div>
+        <div class="glass trust" data-reveal style="--d:.4s">
+            <span class="trust__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7.5-7 9c-4-1.5-7-5-7-9V6z"/></svg></span>
+            <span><span class="trust__val">Гарантия</span><span class="trust__lbl">не подошло — переделаем</span></span>
+        </div>
+    </div>
+</section>
+
+<div class="marquee marquee--tilt" aria-hidden="true">
+    <div class="marquee__track">
+        {% for i in "12" %}
+        <span class="marquee__item">3D-печать</span>
+        <span class="marquee__item marquee__item--ghost">PLA · PETG · ABS</span>
+        <span class="marquee__item"><span class="serif">слой за слоем</span></span>
+        <span class="marquee__item">3D-сканирование</span>
+        <span class="marquee__item marquee__item--ghost">STL · OBJ · 3MF · STEP</span>
+        <span class="marquee__item">Постобработка</span>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="manifesto" data-manifesto>
+    <div aria-hidden="true" class="layers-sep" style="max-width:600px;margin:0 auto 64px;"></div>
+    <p class="manifesto__text" data-words>Каждая вещь когда-то была просто <span class="word--mint">линией</span></p>
+    <svg class="manifesto__line" viewBox="0 0 760 80" aria-hidden="true">
+        <defs><linearGradient id="filament" x1="0" x2="1"><stop offset="0" stop-color="#5FD4C4"/><stop offset=".6" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FFB066"/></linearGradient></defs>
+        <path pathLength="1" d="M4 60 C 90 60, 110 14, 190 20 S 300 70, 380 44 S 520 6, 600 30 S 700 64, 756 22"/>
+    </svg>
+    <p class="manifesto__sign">— девиз мастерской</p>
 </section>
 
 {% if featured_products %}
-<section class="section section--warm" id="catalog">
+<section class="section" id="catalog" style="padding-top:40px;">
+    <div class="orb orb--mint" aria-hidden="true" style="left:50%;top:200px;width:900px;height:600px;margin-left:-450px;filter:none;opacity:.6;"></div>
     <div class="container">
-        <span class="section-label">01 / Готовые изделия</span>
         <div class="section-heading">
-            <h2 class="extrude-line">Популярные товары</h2>
-            <a href="{% url 'products:catalog' %}">Смотреть все →</a>
+            <div>
+                <span class="section-label" data-reveal>01 / Готовые изделия</span>
+                <h2 class="split-words" data-split>Готово к <span class="serif">печати</span></h2>
+            </div>
+            <a href="{% url 'products:catalog' %}" class="link-arrow">Весь каталог <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-        <div class="product-grid">
+        <div class="product-grid product-grid--bento">
             {% for product in featured_products %}
                 {% include "components/product-card.html" with product=product %}
             {% endfor %}
+            <a href="{% url 'print_requests:form' %}" class="promo-card" data-reveal>
+                <svg class="promo-card__file" width="54" height="66" viewBox="0 0 64 78" aria-hidden="true"><path d="M4 4h38l18 18v52H4z" fill="#152730" stroke="#5FD4C4" stroke-width="1.5"/><path d="M42 4v18h18" fill="none" stroke="#5FD4C4" stroke-width="1.5"/><g stroke="rgba(95,212,196,.5)"><path d="M14 44h36M14 50h36M14 56h28"/></g></svg>
+                <span class="mono" style="font-size:.7rem;color:var(--amber-3);">Нет нужной модели?</span>
+                <span class="promo-card__title">Пришлите файл — <span class="serif">напечатаем</span></span>
+                <span class="link-arrow">STL · OBJ · 3MF · STEP <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
         </div>
     </div>
 </section>
 {% endif %}
 
-<section class="section section--white" id="process">
+<section class="section" id="process">
     <div class="container">
-        <span class="section-label">02 / Как это работает</span>
-        <h2 class="extrude-line" style="margin-bottom:56px;">Как проходит заказ: четыре слоя</h2>
-
-        <div class="process-grid">
-            <div class="process-step">
-                <div class="process-step__num">01</div>
-                <h3>Заявка</h3>
-                <p>Выберите товар в каталоге или пришлите свою 3D-модель / фото объекта.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-step__num">02</div>
-                <h3>Согласование</h3>
-                <p>Укажите имя и телефон — без регистрации. Мы свяжемся и уточним детали и стоимость.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-step__num">03</div>
-                <h3>Производство</h3>
-                <p>Слой за слоем принтер строит вашу деталь. Контроль качества на каждом этапе.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-step__num">04</div>
-                <h3>Готово</h3>
-                <p>Сообщаем о готовности, согласуем выдачу или доставку заказа.</p>
-            </div>
-        </div>
-
-        <div class="layer-progress">
-            <div class="layer-progress__label">Статус заявки</div>
-            <div style="flex:1;min-width:220px;">
-                <div class="layer-progress__bars">
-                    <span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span>
+        <span class="section-label" data-reveal>02 / Как это работает</span>
+        <h2 class="split-words" data-split style="margin-bottom:40px;">От заявки до <span class="serif">готовой детали</span></h2>
+        <div class="bento">
+            <div class="glass tile tile--wide tile--tall" data-reveal="print">
+                <span class="tile__num" aria-hidden="true">01</span>
+                <div>
+                    <span class="tile__step">Шаг 1</span>
+                    <h3>Заявка</h3>
+                    <p style="max-width:380px;">Выберите товар в каталоге, пришлите 3D-модель или фото объекта для сканирования.</p>
                 </div>
-                <div class="layer-progress__steps">
-                    <span>Новая</span><span>Связались</span><span class="is-current">В работе</span><span>Готова</span>
+                <div class="dropzone-demo">
+                    <div class="drop">
+                        <svg width="64" height="78" viewBox="0 0 64 78" aria-hidden="true"><path d="M4 4h38l18 18v52H4z" fill="#152730" stroke="#5FD4C4" stroke-width="1.5"/><path d="M42 4v18h18" fill="none" stroke="#5FD4C4" stroke-width="1.5"/><g stroke="rgba(95,212,196,.5)"><path d="M14 44h36M14 50h36M14 56h28"/></g></svg>
+                        <span>bracket_v2.stl</span>
+                    </div>
                 </div>
             </div>
-            <div class="layer-progress__meta">Слой 3 / 4</div>
+            <div class="glass tile" data-reveal="print" style="--d:.1s">
+                <span class="tile__num" aria-hidden="true">02</span>
+                <div><span class="tile__step">Шаг 2</span><h3>Согласование</h3></div>
+                <div class="swatches-demo" aria-hidden="true">
+                    <span style="background:linear-gradient(160deg,#FFC48A,#C9652A);"></span>
+                    <span style="background:linear-gradient(160deg,#A7F0E5,#2E8A80);animation-delay:.3s;"></span>
+                    <span style="background:linear-gradient(160deg,#EEF2F1,#8FA3A6);animation-delay:.6s;"></span>
+                    <span style="background:linear-gradient(160deg,#3C4E55,#152730);border:1px solid rgba(255,255,255,.12);animation-delay:.9s;"></span>
+                </div>
+            </div>
+            <div class="glass tile" data-reveal="print" style="--d:.2s">
+                <span class="tile__num" aria-hidden="true">03</span>
+                <div><span class="tile__step">Шаг 3</span><h3>Производство</h3></div>
+                <div style="display:flex;align-items:flex-end;gap:16px;">
+                    <div class="grow" aria-hidden="true"></div>
+                    <span class="mono" style="font-size:.68rem;color:var(--muted-2);line-height:1.7;">Слой 0.12–0.28 мм<br>Контроль качества</span>
+                </div>
+            </div>
+            <div class="glass tile" data-reveal="print" style="--d:.3s">
+                <span class="tile__num" aria-hidden="true">04</span>
+                <div><span class="tile__step">Шаг 4</span><h3>Готово</h3></div>
+                <div class="box-demo" aria-hidden="true"><div class="box-demo__base"></div><div class="box-demo__lid"></div><div class="box-demo__tape"></div></div>
+            </div>
+            <div class="glass tile tile--mint" data-reveal="print" style="--d:.4s">
+                <div><span class="tile__step" style="color:var(--mint);">Без регистрации</span><h3>Имя и телефон</h3></div>
+                <p>Никаких аккаунтов и паролей — менеджер сам свяжется и уточнит детали.</p>
+            </div>
+            <div class="glass tile tile--full" data-reveal="print" style="--d:.5s">
+                <div><span class="tile__step">Отслеживание</span><h3>Статус заявки</h3></div>
+                <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:720px;">
+                    <div class="progress" style="--w:75%;"><i></i></div>
+                    <div class="status-steps"><span>Новая</span><span>Связались</span><span class="is-current">В работе</span><span>Готова</span></div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="section section--warm">
+<section class="section" id="services">
     <div class="container">
-        <span class="section-label">03 / Услуги</span>
+        <span class="section-label" data-reveal>03 / Услуги</span>
+        <h2 class="split-words" data-split style="margin-bottom:40px;">Печатаем и <span class="serif">оцифровываем</span></h2>
         <div class="service-grid">
-            <div class="service-card service-card--print" id="print">
-                <div class="texture-overlay fdm-layers"></div>
-                <div class="texture-overlay blueprint-grid" style="opacity:.5;"></div>
+            <div class="service-card service-card--print" id="print" data-reveal="left" data-spotlight>
                 <div class="service-card__top-line"></div>
+                <svg class="service-card__art" viewBox="0 0 170 200" aria-hidden="true">
+                    <g class="art-layers">
+                        <rect x="25" y="170" width="120" height="10" rx="3" fill="#FF8A3D"/>
+                        <rect x="32" y="156" width="106" height="10" rx="3" fill="#FF9C52" opacity=".9"/>
+                        <rect x="40" y="142" width="90" height="10" rx="3" fill="#FFB066" opacity=".8"/>
+                        <rect x="48" y="128" width="74" height="10" rx="3" fill="#5FD4C4" opacity=".7"/>
+                        <rect x="56" y="114" width="58" height="10" rx="3" fill="#5FD4C4" opacity=".5"/>
+                        <rect x="64" y="100" width="42" height="10" rx="3" fill="#5FD4C4" opacity=".3"/>
+                    </g>
+                    <g class="art-nozzle"><rect x="70" y="40" width="30" height="22" rx="4" fill="#152730" stroke="rgba(255,255,255,.2)"/><path d="M78 62h14l-4 18h-6z" fill="#2A3A40"/><circle cx="85" cy="84" r="3" fill="#FFE0C2"/></g>
+                </svg>
                 <div style="position:relative;z-index:1;display:flex;flex-direction:column;flex:1;">
                     <div class="service-card__icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 17l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 12l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     </div>
-                    <h3>Напечатаем вашу модель</h3>
+                    <h3>Напечатаем <span class="serif">вашу модель</span></h3>
                     <p>Загрузите STL, OBJ, 3MF, STEP или STP — подберём материал, рассчитаем стоимость и изготовим деталь любой сложности.</p>
                     <ul>
-                        <li>ПЛА, ПЕТГ, АБС, ТПУ и другие материалы</li>
+                        <li>PLA, PETG, ABS, TPU и другие материалы</li>
                         <li>Точность печати ±0.2 мм</li>
                         <li>Рабочий стол до 220×220×250 мм</li>
                         <li>Постобработка по запросу</li>
                     </ul>
-                    <a href="{% url 'print_requests:form' %}" class="btn btn--primary">Отправить файл</a>
+                    <a href="{% url 'print_requests:form' %}" class="btn btn--primary" data-magnetic>Отправить файл
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </div>
             </div>
 
-            <div class="service-card service-card--scan" id="scanning">
-                <div class="texture-overlay fdm-layers" style="opacity:.6;"></div>
+            <div class="service-card service-card--scan" id="scanning" data-reveal="right" data-spotlight>
                 <div class="scanner-wrap"><div class="scanner-line"></div></div>
-                <span class="service-card__brackets"><span></span><span></span><span></span><span></span></span>
+                <span class="service-card__brackets" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+                <svg class="service-card__art" viewBox="0 0 170 200" aria-hidden="true">
+                    <g class="wire" fill="none" stroke="#5FD4C4" stroke-width="1.2">
+                        <path d="M55 186 C40 150 32 120 46 92 C56 70 48 46 62 22 L64 6 L106 6 L108 22 C122 46 114 70 124 92 C138 120 130 150 115 186 Z"/>
+                        <g stroke="rgba(95,212,196,.4)"><path d="M48 150 H122"/><path d="M40 120 H130"/><path d="M46 92 H124"/><path d="M54 64 H116"/><path d="M62 36 H108"/><path d="M85 6 C70 60 110 120 85 186"/></g>
+                    </g>
+                    <g class="point-cloud" fill="#9BE7DC">
+                        <circle cx="30" cy="60" r="1.6"/><circle cx="140" cy="80" r="1.4" style="animation-delay:.4s"/><circle cx="24" cy="140" r="1.2" style="animation-delay:.8s"/><circle cx="150" cy="150" r="1.6" style="animation-delay:1.2s"/><circle cx="85" cy="196" r="1.4" style="animation-delay:1.6s"/><circle cx="148" cy="30" r="1.2" style="animation-delay:2s"/>
+                    </g>
+                </svg>
                 <div style="position:relative;z-index:1;display:flex;flex-direction:column;flex:1;">
                     <div class="service-card__icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" stroke="white" stroke-width="1.5" stroke-linecap="round" /><path d="M3 12h18" stroke="white" stroke-width="1.5" stroke-linecap="round" /></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5FD4C4" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M3 12h18"/></svg>
                     </div>
-                    <h3>Оцифруем любой объект</h3>
+                    <h3>Оцифруем <span class="serif serif--mint">любой объект</span></h3>
                     <p>Профессиональное 3D-сканирование: от небольших деталей до крупных изделий. Получите точную цифровую копию.</p>
                     <ul>
                         <li>Высокая точность сканирования</li>
@@ -170,45 +264,85 @@
                         <li>Форматы STL, OBJ, STEP, PLY</li>
                         <li>Постобработка по запросу</li>
                     </ul>
-                    <a href="{% url 'scanning:form' %}" class="btn btn--outline-light">Уточнить стоимость</a>
+                    <a href="{% url 'scanning:form' %}" class="btn btn--outline" data-magnetic>Уточнить стоимость
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section section--white">
+<section class="section" id="materials" style="padding-bottom:80px;">
     <div class="container">
-        <span class="section-label">04 / Почему мы</span>
-        <h2 class="extrude-line" style="margin-bottom:56px;">Почему Чтотиб Render</h2>
+        <span class="section-label" data-reveal>04 / Материалы</span>
+        <h2 class="split-words" data-split style="margin-bottom:40px;">Пластик, который <span class="serif">чувствуешь</span></h2>
+    </div>
+    <div class="rail" data-rail>
+        <div class="glass mat" tabindex="0" data-reveal style="--d:.05s">
+            <div class="mat__swatch"><i style="background:linear-gradient(150deg,#FFD3A8,#E07A35);"></i></div>
+            <div class="mat__head"><h3>PLA</h3><span class="mat__tag">Универсальный</span></div>
+            <p>Матовый, точный, экологичный. Для декора, макетов и фигурок.</p>
+            <div class="mat__stats"><div class="mat__stat">Прочность<div><i style="--w:55%"></i></div></div><div class="mat__stat">Гибкость<div><i style="--w:25%"></i></div></div><div class="mat__stat">Термостойкость<div><i style="--w:30%"></i></div></div></div>
+        </div>
+        <div class="glass mat" tabindex="0" data-reveal style="--d:.15s">
+            <div class="mat__swatch"><i style="background:linear-gradient(150deg,#C6F5EE,#2E8A80);"></i></div>
+            <div class="mat__head"><h3>PETG</h3><span class="mat__tag">Прочный</span></div>
+            <p>Упругий и влагостойкий. Для вещей, которыми пользуются каждый день.</p>
+            <div class="mat__stats"><div class="mat__stat">Прочность<div><i style="--w:75%"></i></div></div><div class="mat__stat">Гибкость<div><i style="--w:50%"></i></div></div><div class="mat__stat">Термостойкость<div><i style="--w:55%"></i></div></div></div>
+        </div>
+        <div class="glass mat" tabindex="0" data-reveal style="--d:.25s">
+            <div class="mat__swatch"><i style="background:linear-gradient(150deg,#E4E9E8,#7C8E91);"></i></div>
+            <div class="mat__head"><h3>ABS</h3><span class="mat__tag">Инженерный</span></div>
+            <p>Выдерживает нагрев и нагрузку. Для деталей и механики.</p>
+            <div class="mat__stats"><div class="mat__stat">Прочность<div><i style="--w:80%"></i></div></div><div class="mat__stat">Гибкость<div><i style="--w:45%"></i></div></div><div class="mat__stat">Термостойкость<div><i style="--w:80%"></i></div></div></div>
+        </div>
+        <div class="glass mat" tabindex="0" data-reveal style="--d:.35s">
+            <div class="mat__swatch"><i style="background:linear-gradient(150deg,#5A6E75,#1C2B31);"></i></div>
+            <div class="mat__head"><h3>TPU</h3><span class="mat__tag">Гибкий</span></div>
+            <p>Резиноподобный. Чехлы, амортизаторы, ножки, уплотнители.</p>
+            <div class="mat__stats"><div class="mat__stat">Прочность<div><i style="--w:60%"></i></div></div><div class="mat__stat">Гибкость<div><i style="--w:95%"></i></div></div><div class="mat__stat">Термостойкость<div><i style="--w:45%"></i></div></div></div>
+        </div>
+        <div class="glass mat" tabindex="0" data-reveal style="--d:.45s">
+            <div class="mat__swatch"><i style="background:linear-gradient(150deg,#FFE7CF,#B98A5E);"></i></div>
+            <div class="mat__head"><h3>Нейлон</h3><span class="mat__tag">Высокопрочный</span></div>
+            <p>Износостойкий и прочный на разрыв. Шестерни, крепёж, функциональные детали.</p>
+            <div class="mat__stats"><div class="mat__stat">Прочность<div><i style="--w:90%"></i></div></div><div class="mat__stat">Гибкость<div><i style="--w:60%"></i></div></div><div class="mat__stat">Термостойкость<div><i style="--w:65%"></i></div></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="padding-top:40px;">
+    <div class="container">
+        <span class="section-label" data-reveal>05 / Почему мы</span>
+        <h2 class="split-words" data-split style="margin-bottom:40px;">Почему <span class="serif">Чтотиб Render</span></h2>
         <div class="advantages-grid">
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FF7A1A" stroke-width="1.5" /><path d="M12 7v5l3 3" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight>
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
                 <h3>Быстро</h3>
                 <p>Срочный заказ — от 24 часов. Стандартный срок — 1–3 рабочих дня.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 12l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 17l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight style="--d:.08s">
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div>
                 <h3>Любые материалы</h3>
-                <p>ПЛА, ПЕТГ, АБС, ТПУ и другие. Подберём оптимальный материал под задачу.</p>
+                <p>PLA, PETG, ABS, TPU и другие. Подберём оптимальный материал под задачу.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="8" width="20" height="8" rx="1.5" stroke="#FF7A1A" stroke-width="1.5" /><path d="M6 8v4M10 8v3M14 8v4M18 8v3" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight style="--d:.16s">
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="1.5"/><path d="M6 8v4M10 8v3M14 8v4M18 8v3"/></svg></div>
                 <h3>Любые размеры</h3>
                 <p>Печатаем детали от 1 см до крупных изделий за один цикл печати.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V6L12 2z" stroke="#FF7A1A" stroke-width="1.5" stroke-linejoin="round" /><path d="M8.5 12l2.5 2.5 4.5-4.5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight>
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V6L12 2z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg></div>
                 <h3>Гарантия качества</h3>
                 <p>Проверяем каждое изделие перед выдачей. Не подошло — переделаем.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#FF7A1A" stroke-width="1.5" stroke-linejoin="round" /><path d="M14 2v6h6M8 13h8M8 17h5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight style="--d:.08s">
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
                 <h3>Файл сканирования</h3>
                 <p>После 3D-сканирования получаете цифровой файл: STL, OBJ, STEP или PLY.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v12H4z" stroke="#FF7A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 20h6M12 16v4" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" /></svg></div>
+            <div class="advantage-card" data-reveal data-spotlight style="--d:.16s">
+                <div class="advantage-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H4z"/><path d="M9 20h6M12 16v4"/></svg></div>
                 <h3>Без регистрации</h3>
                 <p>Оформление заявки за пару минут — без аккаунтов и паролей.</p>
             </div>
@@ -216,40 +350,58 @@
     </div>
 </section>
 
-<section class="section section--warm">
-    <div class="container">
-        <span class="section-label">05 / FAQ</span>
-        <h2 class="extrude-line" style="margin-bottom:48px;">Частые вопросы</h2>
-
+<section class="section">
+    <div class="container faq-wrap">
+        <div>
+            <span class="section-label" data-reveal>06 / FAQ</span>
+            <h2 class="split-words" data-split>Частые <span class="serif">вопросы</span></h2>
+            <div class="faq-cta" data-reveal>
+                <div>
+                    <p style="font-weight:600;color:var(--ink);">Остались вопросы?</p>
+                    <p style="font-size:.9rem;margin-top:4px;">Ответим в течение часа в рабочее время.</p>
+                </div>
+                <a href="{% url 'core:contact' %}" class="btn btn--primary btn--sm">Написать</a>
+            </div>
+        </div>
         <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-item__q" aria-expanded="false"><span>Нужно ли регистрироваться, чтобы оформить заявку?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span></button>
+            <div class="faq-item" data-reveal>
+                <button class="faq-item__q" aria-expanded="false"><span>Нужно ли регистрироваться, чтобы оформить заявку?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
                 <div class="faq-item__a"><p>Нет, регистрация не требуется. Достаточно указать имя и телефон при оформлении заявки.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-item__q" aria-expanded="false"><span>Какие форматы 3D-моделей вы принимаете?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span></button>
-                <div class="faq-item__a"><p>STL, OBJ, 3MF, STEP, STP, а также ссылку на файл, если он размещен в облаке.</p></div>
+            <div class="faq-item" data-reveal style="--d:.06s">
+                <button class="faq-item__q" aria-expanded="false"><span>Какие форматы 3D-моделей вы принимаете?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+                <div class="faq-item__a"><p>STL, OBJ, 3MF, STEP, STP, а также ссылку на файл, если он размещён в облаке.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-item__q" aria-expanded="false"><span>Сколько стоит 3D-печать?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span></button>
+            <div class="faq-item" data-reveal style="--d:.12s">
+                <button class="faq-item__q" aria-expanded="false"><span>Сколько стоит 3D-печать?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
                 <div class="faq-item__a"><p>Стоимость зависит от объёма модели, материала и постобработки. Точный расчёт — после получения файла или описания задачи.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-item__q" aria-expanded="false"><span>Как быстро вы свяжетесь со мной?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span></button>
+            <div class="faq-item" data-reveal style="--d:.18s">
+                <button class="faq-item__q" aria-expanded="false"><span>Как быстро вы свяжетесь со мной?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
                 <div class="faq-item__a"><p>Обычно мы отвечаем в течение рабочего дня после получения заявки.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-item__q" aria-expanded="false"><span>Можно ли оплатить заказ онлайн?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span></button>
+            <div class="faq-item" data-reveal style="--d:.24s">
+                <button class="faq-item__q" aria-expanded="false"><span>Можно ли оплатить заказ онлайн?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
                 <div class="faq-item__a"><p>На данный момент оплата обсуждается индивидуально после согласования деталей с менеджером.</p></div>
             </div>
         </div>
+    </div>
+</section>
 
-        <div class="faq-cta">
-            <div>
-                <p style="font-weight:600;margin:0;">Остались вопросы?</p>
-                <p style="color:var(--color-ink-muted);font-size:.9rem;margin:4px 0 0;">Напишите нам — ответим в течение часа в рабочее время.</p>
+<section class="section" style="padding-top:20px;">
+    <div class="container">
+        <div class="glass cta-band" data-reveal="zoom">
+            <div class="cta-band__layers" aria-hidden="true"></div>
+            <div style="position:relative;">
+                <span class="section-label">07 / Начнём</span>
+                <h2>Своя модель? Напечатаем <span class="serif">слой за слоем</span></h2>
+                <p style="margin:0;max-width:460px;">Загрузите файл или опишите объект — инженер проверит модель и напишет, если что-то стоит поправить.</p>
             </div>
-            <a href="{% url 'core:contact' %}" class="btn btn--primary">Написать</a>
+            <div class="cta-band__actions">
+                <a href="{% url 'print_requests:form' %}" class="btn btn--primary btn--lg" data-magnetic>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Загрузить модель</a>
+                <a href="{% url 'scanning:form' %}" class="btn btn--outline btn--lg" data-magnetic>Заказать сканирование</a>
+            </div>
         </div>
     </div>
 </section>

@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A1216">
     <title>{% block title %}Панель управления{% endblock %} — Чтотиб Render</title>
     <meta name="robots" content="noindex, nofollow">
+    <script>document.documentElement.classList.add("js");</script>
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body class="dash">
+    <svg class="dash-grain" aria-hidden="true" width="100%" height="100%"><filter id="dgr"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#dgr)"/></svg>
+
     <aside class="dash-sidebar">
         <a href="{% url 'dashboard:home' %}" class="dash-sidebar__logo">
             {% include "components/cube-logo.html" with size=28 %}
@@ -21,34 +25,34 @@
         <nav class="dash-nav">
             <div class="dash-nav__group-title">Обзор</div>
             <a href="{% url 'dashboard:home' %}" class="dash-nav__link {% if active == 'home' %}is-active{% endif %}">
-                <span class="dash-nav__icon">▦</span> Дашборд
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="9" rx="2"/><rect x="13" y="4" width="7" height="5" rx="2"/><rect x="13" y="11" width="7" height="9" rx="2"/><rect x="4" y="15" width="7" height="5" rx="2"/></svg></span> Дашборд
             </a>
 
             <div class="dash-nav__group-title">Заявки</div>
             <a href="{% url 'dashboard:order_list' %}" class="dash-nav__link {% if active == 'orders' %}is-active{% endif %}">
-                <span class="dash-nav__icon">🛒</span> Товары
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span> Товары
                 {% if nav_counts.orders %}<span class="dash-nav__badge">{{ nav_counts.orders }}</span>{% endif %}
             </a>
             <a href="{% url 'dashboard:print_list' %}" class="dash-nav__link {% if active == 'print' %}is-active{% endif %}">
-                <span class="dash-nav__icon">⛽</span> Печать моделей
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span> Печать моделей
                 {% if nav_counts.print %}<span class="dash-nav__badge">{{ nav_counts.print }}</span>{% endif %}
             </a>
             <a href="{% url 'dashboard:scan_list' %}" class="dash-nav__link {% if active == 'scan' %}is-active{% endif %}">
-                <span class="dash-nav__icon">◎</span> 3D-сканирование
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M3 12h18"/></svg></span> 3D-сканирование
                 {% if nav_counts.scan %}<span class="dash-nav__badge">{{ nav_counts.scan }}</span>{% endif %}
             </a>
 
             <div class="dash-nav__group-title">Каталог</div>
             <a href="{% url 'dashboard:product_list' %}" class="dash-nav__link {% if active == 'products' %}is-active{% endif %}">
-                <span class="dash-nav__icon">◫</span> Товары
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></span> Товары
             </a>
             <a href="{% url 'dashboard:category_list' %}" class="dash-nav__link {% if active == 'categories' %}is-active{% endif %}">
-                <span class="dash-nav__icon">▤</span> Категории
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span> Категории
             </a>
 
             <div class="dash-nav__group-title">Сайт</div>
             <a href="{% url 'core:home' %}" class="dash-nav__link" target="_blank">
-                <span class="dash-nav__icon">↗</span> Открыть сайт
+                <span class="dash-nav__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span> Открыть сайт
             </a>
         </nav>
 
@@ -63,13 +67,19 @@
 
     <div class="dash-main">
         <header class="dash-topbar">
-            <button class="dash-topbar__burger" type="button" onclick="document.querySelector('.dash-sidebar').classList.toggle('is-open')">☰</button>
-            <h1 class="dash-topbar__title">{% block page_title %}Панель управления{% endblock %}</h1>
+            <button class="dash-topbar__burger" type="button" aria-label="Меню" onclick="document.querySelector('.dash-sidebar').classList.toggle('is-open')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            </button>
+            <div class="dash-topbar__head">
+                <span class="dash-topbar__crumb">Чтотиб Render · панель</span>
+                <h1 class="dash-topbar__title">{% block page_title %}Панель управления{% endblock %}</h1>
+            </div>
+            <span class="dash-clock" data-clock aria-hidden="true">--:--</span>
             <div class="dash-topbar__actions">{% block topbar_actions %}{% endblock %}</div>
         </header>
 
         {% if messages %}
-            <div class="dash-alerts">
+            <div class="dash-alerts" role="status">
                 {% for message in messages %}
                     <div class="dash-alert dash-alert--{{ message.tags|default:'info' }}">{{ message }}</div>
                 {% endfor %}

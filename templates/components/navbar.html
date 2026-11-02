@@ -1,24 +1,49 @@
-{% load static %}
+{% with ns=request.resolver_match.namespace url_name=request.resolver_match.url_name %}
 <header class="navbar">
-    <div class="container navbar__inner">
+    <div class="navbar__inner">
         <a href="{% url 'core:home' %}" class="navbar__logo">
-            {% include "components/cube-logo.html" with size=30 %}
+            {% include "components/cube-logo.html" with size=26 %}
             <span>
-                <span class="navbar__logo-text">Чтотиб <span style="color:var(--color-accent)">Render</span></span>
+                <span class="navbar__logo-text">Чтотиб <em>Render</em></span>
                 <span class="navbar__logo-tag">3D-печать · сканирование</span>
             </span>
         </a>
-        <nav class="navbar__nav">
-            <a href="{% url 'products:catalog' %}">Каталог</a>
-            <a href="{% url 'core:home' %}#process">Как это работает</a>
-            <a href="{% url 'print_requests:form' %}">Печать модели</a>
-            <a href="{% url 'scanning:form' %}">3D-сканирование</a>
-            <a href="{% url 'core:contact' %}">Контакты</a>
+        <nav class="navbar__nav" aria-label="Основная навигация">
+            <span class="navbar__pill" aria-hidden="true"></span>
+            <a href="{% url 'products:catalog' %}" {% if ns == 'products' %}class="is-active"{% endif %}>Каталог</a>
+            <a href="{% url 'print_requests:form' %}" {% if ns == 'print_requests' %}class="is-active"{% endif %}>Печать модели</a>
+            <a href="{% url 'scanning:form' %}" {% if ns == 'scanning' %}class="is-active"{% endif %}>3D-сканирование</a>
+            <a href="{% url 'core:about' %}" {% if url_name == 'about' %}class="is-active"{% endif %}>О нас</a>
+            <a href="{% url 'core:contact' %}" {% if url_name == 'contact' %}class="is-active"{% endif %}>Контакты</a>
         </nav>
-        <a href="{% url 'orders:cart_detail' %}" class="navbar__cart">
+        <a href="{% url 'orders:cart_detail' %}" class="navbar__cart" aria-label="Заявка, позиций: {{ cart|length }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
             Заявка
             <span class="navbar__cart-count">{{ cart|length }}</span>
         </a>
-        <button class="navbar__burger" type="button" aria-label="Меню">☰</button>
     </div>
 </header>
+
+<nav class="tabbar" aria-label="Нижняя навигация">
+    <a href="{% url 'core:home' %}" {% if ns == 'core' and url_name == 'home' %}class="is-active"{% endif %}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg>
+        Главная
+    </a>
+    <a href="{% url 'products:catalog' %}" {% if ns == 'products' %}class="is-active"{% endif %}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
+        Каталог
+    </a>
+    <a href="{% url 'print_requests:form' %}" {% if ns == 'print_requests' %}class="is-active"{% endif %}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+        Печать
+    </a>
+    <a href="{% url 'scanning:form' %}" {% if ns == 'scanning' %}class="is-active"{% endif %}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M3 12h18"/></svg>
+        Скан
+    </a>
+    <a href="{% url 'core:contact' %}" {% if url_name == 'contact' %}class="is-active"{% endif %}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Связь
+    </a>
+</nav>
+{% endwith %}

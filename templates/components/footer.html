@@ -1,35 +1,45 @@
 <footer class="footer">
     <div class="container footer__inner">
         <div class="footer__brand">
-            <a href="{% url 'core:home' %}" class="navbar__logo" style="color:#fff;">
+            <a href="{% url 'core:home' %}" class="navbar__logo">
                 {% include "components/cube-logo.html" with size=28 %}
-                <span class="navbar__logo-text">Чтотиб <span style="color:var(--color-accent)">Render</span></span>
+                <span class="navbar__logo-text">Чтотиб <em>Render</em></span>
             </a>
-            <p>Готовые изделия, печать ваших 3D-моделей и профессиональное 3D-сканирование — слой за слоем, без лишних формальностей.</p>
-            <a href="{% url 'orders:cart_detail' %}" class="btn btn--primary btn--sm">Оставить заявку</a>
+            <h3>Есть идея — <span class="serif">напечатаем</span></h3>
+            <p>Готовые изделия, печать ваших 3D-моделей и 3D-сканирование — слой за слоем, без лишних формальностей.</p>
+            <div><a href="{% url 'print_requests:form' %}" class="btn btn--primary" data-magnetic>Оставить заявку
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div>
         <div>
             <div class="footer__col-title">Разделы</div>
             <nav>
                 <a href="{% url 'products:catalog' %}">Каталог</a>
                 <a href="{% url 'core:home' %}#process">Как это работает</a>
-                <a href="{% url 'print_requests:form' %}">3D-печать</a>
-                <a href="{% url 'scanning:form' %}">3D-сканирование</a>
                 <a href="{% url 'core:about' %}">О компании</a>
                 <a href="{% url 'core:contact' %}">Контакты</a>
             </nav>
         </div>
+        <div>
+            <div class="footer__col-title">Услуги</div>
+            <nav>
+                <a href="{% url 'print_requests:form' %}">3D-печать на заказ</a>
+                <a href="{% url 'scanning:form' %}">3D-сканирование</a>
+                <a href="{% url 'orders:cart_detail' %}">Ваша заявка</a>
+            </nav>
+        </div>
         <div class="footer__materials">
             <div class="footer__col-title">Материалы</div>
-            <div><span class="mat">ПЛА (PLA)</span><span class="desc">Универсальный</span></div>
-            <div><span class="mat">ПЕТГ (PETG)</span><span class="desc">Влагостойкий</span></div>
-            <div><span class="mat">АБС (ABS)</span><span class="desc">Термостойкий</span></div>
-            <div><span class="mat">ТПУ (TPU)</span><span class="desc">Гибкий</span></div>
-            <div><span class="mat">Нейлон</span><span class="desc">Высокопрочный</span></div>
+            <div><span class="mat-name">PLA</span><span class="desc">Универсальный</span></div>
+            <div><span class="mat-name">PETG</span><span class="desc">Влагостойкий</span></div>
+            <div><span class="mat-name">ABS</span><span class="desc">Термостойкий</span></div>
+            <div><span class="mat-name">TPU</span><span class="desc">Гибкий</span></div>
+            <div><span class="mat-name">Нейлон</span><span class="desc">Высокопрочный</span></div>
         </div>
     </div>
+    <div class="footer__word" aria-hidden="true" data-footer-word>ЧТОТИБ</div>
+    <div class="footer__glow" aria-hidden="true"></div>
     <div class="container footer__bottom">
-        <p>&copy; {% now "Y" %} Чтотиб Render. Все права защищены.</p>
-        <p>3D-ПЕЧАТЬ · 3D-СКАНИРОВАНИЕ · ИЗГОТОВЛЕНИЕ НА ЗАКАЗ</p>
+        <p>&copy; {% now "Y" %} Чтотиб Render · мастерская 3D-печати</p>
+        <p>3D-печать · 3D-сканирование · изготовление на заказ</p>
     </div>
 </footer>
