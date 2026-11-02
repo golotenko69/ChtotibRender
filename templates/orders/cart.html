@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Ваша заявка — PrintStudio3D{% endblock %}
+
+{% block content %}
+<section class="section section--warm">
+    <div class="container narrow">
+        <span class="section-label">Заявка</span>
+        <h1 class="extrude-line" style="margin-bottom:36px;">Ваша заявка</h1>
+
+        {% if cart.is_empty %}
+            <p class="empty-state">Заявка пуста. <a href="{% url 'products:catalog' %}">Перейти в каталог</a></p>
+        {% else %}
+            <table class="cart-table">
+                <thead>
+                    <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+                </thead>
+                <tbody>
+                    {% for entry in cart %}
+                    <tr>
+                        <td><a href="{{ entry.product.get_absolute_url }}">{{ entry.product.name }}</a></td>
+                        <td>{{ entry.product.price|floatformat:0|intcomma }} ₽</td>
+                        <td>
+                            <form method="post" action="{% url 'orders:cart_update' entry.product.id %}" class="cart-table__qty-form">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ entry.quantity }}" min="1" class="form-input form-input--qty" onchange="this.form.submit()">
+                            </form>
+                        </td>
+                        <td>{{ entry.subtotal|floatformat:0|intcomma }} ₽</td>
+                        <td>
+                            <form method="post" action="{% url 'orders:cart_remove' entry.product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn--sm btn--outline">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <div class="cart-summary__total">Итого: {{ cart.get_total_price|floatformat:0|intcomma }} ₽</div>
+                <a href="{% url 'orders:checkout' %}" class="btn btn--primary btn--lg">Оформить заявку</a>
+            </div>
+            <p class="form-hint" style="margin-top:14px;">Итоговая стоимость и сроки будут уточнены менеджером после обработки заявки.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% comment %}
+Generic field renderer:
+{% include "components/forms.html" with field=form.name %}
+{% endcomment %}
+<div class="form-field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+    {{ field }}
+    {% if field.help_text %}<p class="form-hint">{{ field.help_text }}</p>{% endif %}
+    {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
+</div>

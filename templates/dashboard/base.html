@@ -1,0 +1,87 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Панель управления{% endblock %} — PrintStudio3D</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="dash">
+    <aside class="dash-sidebar">
+        <a href="{% url 'dashboard:home' %}" class="dash-sidebar__logo">
+            {% include "components/cube-logo.html" with size=28 %}
+            <span>
+                <span class="dash-sidebar__logo-text">Print<span>Studio</span>3D</span>
+                <span class="dash-sidebar__logo-tag">Панель управления</span>
+            </span>
+        </a>
+
+        <nav class="dash-nav">
+            <div class="dash-nav__group-title">Обзор</div>
+            <a href="{% url 'dashboard:home' %}" class="dash-nav__link {% if active == 'home' %}is-active{% endif %}">
+                <span class="dash-nav__icon">▦</span> Дашборд
+            </a>
+
+            <div class="dash-nav__group-title">Заявки</div>
+            <a href="{% url 'dashboard:order_list' %}" class="dash-nav__link {% if active == 'orders' %}is-active{% endif %}">
+                <span class="dash-nav__icon">🛒</span> Товары
+                {% if nav_counts.orders %}<span class="dash-nav__badge">{{ nav_counts.orders }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard:print_list' %}" class="dash-nav__link {% if active == 'print' %}is-active{% endif %}">
+                <span class="dash-nav__icon">⛽</span> Печать моделей
+                {% if nav_counts.print %}<span class="dash-nav__badge">{{ nav_counts.print }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard:scan_list' %}" class="dash-nav__link {% if active == 'scan' %}is-active{% endif %}">
+                <span class="dash-nav__icon">◎</span> 3D-сканирование
+                {% if nav_counts.scan %}<span class="dash-nav__badge">{{ nav_counts.scan }}</span>{% endif %}
+            </a>
+
+            <div class="dash-nav__group-title">Каталог</div>
+            <a href="{% url 'dashboard:product_list' %}" class="dash-nav__link {% if active == 'products' %}is-active{% endif %}">
+                <span class="dash-nav__icon">◫</span> Товары
+            </a>
+            <a href="{% url 'dashboard:category_list' %}" class="dash-nav__link {% if active == 'categories' %}is-active{% endif %}">
+                <span class="dash-nav__icon">▤</span> Категории
+            </a>
+
+            <div class="dash-nav__group-title">Сайт</div>
+            <a href="{% url 'core:home' %}" class="dash-nav__link" target="_blank">
+                <span class="dash-nav__icon">↗</span> Открыть сайт
+            </a>
+        </nav>
+
+        <div class="dash-sidebar__user">
+            <div class="dash-avatar">{{ request.user.username|slice:":1"|upper }}</div>
+            <div class="dash-sidebar__user-info">
+                <strong>{{ request.user.get_username }}</strong>
+                <a href="{% url 'dashboard:logout' %}">Выйти</a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="dash-main">
+        <header class="dash-topbar">
+            <button class="dash-topbar__burger" type="button" onclick="document.querySelector('.dash-sidebar').classList.toggle('is-open')">☰</button>
+            <h1 class="dash-topbar__title">{% block page_title %}Панель управления{% endblock %}</h1>
+            <div class="dash-topbar__actions">{% block topbar_actions %}{% endblock %}</div>
+        </header>
+
+        {% if messages %}
+            <div class="dash-alerts">
+                {% for message in messages %}
+                    <div class="dash-alert dash-alert--{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <main class="dash-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

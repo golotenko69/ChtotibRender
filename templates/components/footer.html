@@ -1,0 +1,35 @@
+<footer class="footer">
+    <div class="container footer__inner">
+        <div class="footer__brand">
+            <a href="{% url 'core:home' %}" class="navbar__logo" style="color:#fff;">
+                {% include "components/cube-logo.html" with size=28 %}
+                <span class="navbar__logo-text">Print<span style="color:var(--color-accent)">Studio</span>3D</span>
+            </a>
+            <p>Готовые изделия, печать ваших 3D-моделей и профессиональное 3D-сканирование — слой за слоем, без лишних формальностей.</p>
+            <a href="{% url 'orders:cart_detail' %}" class="btn btn--primary btn--sm">Оставить заявку</a>
+        </div>
+        <div>
+            <div class="footer__col-title">Разделы</div>
+            <nav>
+                <a href="{% url 'products:catalog' %}">Каталог</a>
+                <a href="{% url 'core:home' %}#process">Как это работает</a>
+                <a href="{% url 'print_requests:form' %}">3D-печать</a>
+                <a href="{% url 'scanning:form' %}">3D-сканирование</a>
+                <a href="{% url 'core:about' %}">О компании</a>
+                <a href="{% url 'core:contact' %}">Контакты</a>
+            </nav>
+        </div>
+        <div class="footer__materials">
+            <div class="footer__col-title">Материалы</div>
+            <div><span class="mat">ПЛА (PLA)</span><span class="desc">Универсальный</span></div>
+            <div><span class="mat">ПЕТГ (PETG)</span><span class="desc">Влагостойкий</span></div>
+            <div><span class="mat">АБС (ABS)</span><span class="desc">Термостойкий</span></div>
+            <div><span class="mat">ТПУ (TPU)</span><span class="desc">Гибкий</span></div>
+            <div><span class="mat">Нейлон</span><span class="desc">Высокопрочный</span></div>
+        </div>
+    </div>
+    <div class="container footer__bottom">
+        <p>&copy; {% now "Y" %} PrintStudio3D. Все права защищены.</p>
+        <p>3D-ПЕЧАТЬ · 3D-СКАНИРОВАНИЕ · ИЗГОТОВЛЕНИЕ НА ЗАКАЗ</p>
+    </div>
+</footer>

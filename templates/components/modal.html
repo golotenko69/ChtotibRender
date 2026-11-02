@@ -1,0 +1,7 @@
+<div class="modal" id="{{ modal_id|default:'modal' }}" hidden>
+    <div class="modal__backdrop" onclick="this.parentElement.hidden = true"></div>
+    <div class="modal__panel">
+        <button class="modal__close" type="button" onclick="this.closest('.modal').hidden = true">&times;</button>
+        {{ modal_content }}
+    </div>
+</div>

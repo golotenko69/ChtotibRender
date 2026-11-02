@@ -1,0 +1,77 @@
+{% extends "dashboard/base.html" %}
+{% load humanize %}
+{% block title %}Товары{% endblock %}
+{% block page_title %}Товары{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:product_create' %}" class="dbtn dbtn--primary">+ Добавить товар</a>{% endblock %}
+
+{% block content %}
+<form method="get" class="dash-filterbar">
+    <input type="text" name="q" value="{{ query }}" placeholder="Поиск по названию или артикулу" class="dash-input" style="max-width:260px;">
+    <select name="category" class="dash-input dash-select" style="max-width:200px;" onchange="this.form.submit()">
+        <option value="">Все категории</option>
+        {% for c in categories %}
+            <option value="{{ c.id }}" {% if category_id == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <div class="dash-filterbar__tabs">
+        <a href="?{% if query %}q={{ query }}&{% endif %}" class="dash-tab {% if not stock_filter %}is-active{% endif %}">Все</a>
+        <a href="?stock=low{% if query %}&q={{ query }}{% endif %}" class="dash-tab {% if stock_filter == 'low' %}is-active{% endif %}">Мало на складе</a>
+        <a href="?stock=out{% if query %}&q={{ query }}{% endif %}" class="dash-tab {% if stock_filter == 'out' %}is-active{% endif %}">Нет в наличии</a>
+    </div>
+    <button type="submit" class="dbtn dbtn--outline">Применить</button>
+</form>
+
+{% if page_obj.object_list %}
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead>
+            <tr><th>Товар</th><th>Артикул</th><th>Категория</th><th>Цена</th><th>Остаток</th><th>Статус</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for product in page_obj %}
+            <tr>
+                <td style="display:flex;align-items:center;gap:10px;">
+                    {% if product.main_image %}
+                        <img src="{{ product.main_image.url }}" class="dash-table__thumb" alt="">
+                    {% else %}
+                        <span class="dash-table__thumb-placeholder">{% include "components/cube-logo.html" with size=24 %}</span>
+                    {% endif %}
+                    <a href="{% url 'dashboard:product_edit' product.pk %}">{{ product.name }}</a>
+                </td>
+                <td>{{ product.sku }}</td>
+                <td>{{ product.category.name|default:"—" }}</td>
+                <td>{{ product.price|floatformat:0|intcomma }} ₽</td>
+                <td>
+                    {% if product.stock == 0 %}<span class="dash-pill dash-pill--stock-out">0</span>
+                    {% elif product.stock <= 5 %}<span class="dash-pill dash-pill--stock-low">{{ product.stock }}</span>
+                    {% else %}<span class="dash-pill dash-pill--stock-ok">{{ product.stock }}</span>{% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'dashboard:product_toggle_active' product.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="dash-pill {% if product.is_active %}dash-pill--stock-ok{% else %}dash-pill--stock-out{% endif %}" style="border:none;cursor:pointer;">
+                            {% if product.is_active %}Активен{% else %}Скрыт{% endif %}
+                        </button>
+                    </form>
+                </td>
+                <td style="white-space:nowrap;">
+                    <a href="{% url 'dashboard:product_edit' product.pk %}" class="dbtn dbtn--outline dbtn--sm">Изменить</a>
+                    <a href="{% url 'dashboard:product_delete' product.pk %}" class="dbtn dbtn--danger dbtn--sm">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="dash-pagination">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&larr;</a>{% endif %}
+    <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">&rarr;</a>{% endif %}
+</div>
+{% endif %}
+{% else %}
+<p class="dash-empty">Товары не найдены. <a href="{% url 'dashboard:product_create' %}">Добавьте первый товар</a>.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Заказать печать своей модели — PrintStudio3D{% endblock %}
+
+{% block content %}
+<section class="section section--dark" style="position:relative;overflow:hidden;padding:64px 0 48px;">
+    <div class="texture-overlay fdm-layers"></div>
+    <div class="texture-overlay blueprint-grid"></div>
+    <div class="container narrow" style="position:relative;">
+        <div class="service-card__icon" style="margin-bottom:22px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 17l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 12l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </div>
+        <span class="section-label">3D-печать на заказ</span>
+        <h1 style="color:#fff;">Заказать печать своей модели</h1>
+        <p style="color:rgba(255,255,255,.6);">Загрузите 3D-файл (STL, OBJ, 3MF, STEP, STP) и/или укажите ссылку на модель — мы оценим стоимость и материал.</p>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container narrow">
+        <form method="post" enctype="multipart/form-data" class="form" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
+
+            {% include "components/forms.html" with field=form.name %}
+            {% include "components/forms.html" with field=form.phone %}
+            {% include "components/forms.html" with field=form.email %}
+            {% include "components/forms.html" with field=form.project_name %}
+            {% include "components/forms.html" with field=form.description %}
+            {% include "components/forms.html" with field=form.quantity %}
+            {% include "components/forms.html" with field=form.material %}
+            {% include "components/forms.html" with field=form.color %}
+            {% include "components/forms.html" with field=form.deadline %}
+            {% include "components/forms.html" with field=form.model_url %}
+
+            <div class="form-field">
+                <label>3D-файл модели (STL, OBJ, 3MF, STEP, STP)</label>
+                {% include "components/file-upload.html" with field=form.model_file zone_id="model-file-upload" hint="до 100 МБ" %}
+            </div>
+
+            <div class="form-field">
+                <label>Дополнительные фотографии (необязательно)</label>
+                {% include "components/file-upload.html" with field=form.photos zone_id="photos-upload" hint="JPG, PNG, WEBP, до 5 файлов" %}
+            </div>
+
+            {% include "components/forms.html" with field=form.comment %}
+
+            <button type="submit" class="btn btn--primary btn--lg">Отправить заявку</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

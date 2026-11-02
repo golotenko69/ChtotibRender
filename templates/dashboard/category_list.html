@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Категории{% endblock %}
+{% block page_title %}Категории{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:category_create' %}" class="dbtn dbtn--primary">+ Добавить категорию</a>{% endblock %}
+
+{% block content %}
+{% if categories %}
+<div class="dash-category-grid">
+    {% for category in categories %}
+    <div class="dash-category-card">
+        <div class="dash-category-card__image" {% if category.image %}style="background-image:url('{{ category.image.url }}');"{% endif %}>
+            {% if not category.image %}Нет фото{% endif %}
+        </div>
+        <div class="dash-category-card__body">
+            <strong>{{ category.name }}</strong>
+            <div style="color:var(--d-muted);font-size:.82rem;margin:4px 0 8px;">
+                {{ category.products.count }} товар(ов) ·
+                {% if category.is_active %}<span class="dash-pill dash-pill--stock-ok">Активна</span>{% else %}<span class="dash-pill dash-pill--stock-out">Скрыта</span>{% endif %}
+            </div>
+            <div class="dash-category-card__actions">
+                <a href="{% url 'dashboard:category_edit' category.pk %}" class="dbtn dbtn--outline dbtn--sm">Изменить</a>
+                <a href="{% url 'dashboard:category_delete' category.pk %}" class="dbtn dbtn--danger dbtn--sm">Удалить</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="dash-empty">Категорий пока нет. <a href="{% url 'dashboard:category_create' %}">Создайте первую</a>.</p>
+{% endif %}
+{% endblock %}

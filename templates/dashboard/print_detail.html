@@ -1,0 +1,77 @@
+{% extends "dashboard/base.html" %}
+{% load humanize %}
+{% block title %}{{ print_request.request_number }}{% endblock %}
+{% block page_title %}Заявка {{ print_request.request_number }}{% endblock %}
+{% block topbar_actions %}<span class="dash-pill dash-pill--{{ print_request.status }}">{{ print_request.get_status_display }}</span>{% endblock %}
+
+{% block content %}
+<div class="dash-detail-grid">
+    <div>
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Клиент</h2>
+            <dl class="dash-kv">
+                <dt>Имя</dt><dd>{{ print_request.name }}</dd>
+                <dt>Телефон</dt><dd><a href="tel:{{ print_request.phone }}">{{ print_request.phone }}</a></dd>
+                <dt>Email</dt><dd>{{ print_request.email|default:"—" }}</dd>
+                <dt>Создана</dt><dd>{{ print_request.created_at|date:"d.m.Y H:i" }}</dd>
+            </dl>
+        </div>
+
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Проект</h2>
+            <dl class="dash-kv">
+                <dt>Название</dt><dd>{{ print_request.project_name|default:"—" }}</dd>
+                <dt>Количество</dt><dd>{{ print_request.quantity }}</dd>
+                <dt>Материал</dt><dd>{{ print_request.get_material_display }}</dd>
+                <dt>Цвет</dt><dd>{{ print_request.color|default:"—" }}</dd>
+                <dt>Срок</dt><dd>{{ print_request.deadline|date:"d.m.Y"|default:"—" }}</dd>
+            </dl>
+            <h3 style="font-size:.9rem;margin:14px 0 4px;">Описание</h3>
+            <p>{{ print_request.description|linebreaks }}</p>
+            {% if print_request.comment %}
+                <h3 style="font-size:.9rem;margin:14px 0 4px;">Комментарий клиента</h3>
+                <p>{{ print_request.comment|linebreaks }}</p>
+            {% endif %}
+        </div>
+
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Файлы</h2>
+            {% if print_request.model_file %}
+                <a href="{{ print_request.model_file.url }}" target="_blank" class="dash-file-pill">⬇ Скачать файл модели</a>
+            {% endif %}
+            {% if print_request.model_url %}
+                <p style="margin-top:10px;"><strong>Ссылка на модель:</strong> <a href="{{ print_request.model_url }}" target="_blank">{{ print_request.model_url }}</a></p>
+            {% endif %}
+            {% if print_request.photos.all %}
+                <h3 style="font-size:.9rem;margin:14px 0 4px;">Дополнительные фото</h3>
+                <div class="dash-photo-grid">
+                    {% for photo in print_request.photos.all %}
+                        <a href="{{ photo.image.url }}" target="_blank"><img src="{{ photo.image.url }}" alt=""></a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="dash-panel">
+        <h2 class="dash-section-title">Управление заявкой</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="dash-field">
+                <label>Статус</label>
+                {{ form.status }}
+            </div>
+            <div class="dash-field">
+                <label>Ориентировочная цена, ₽</label>
+                {{ form.estimated_price }}
+            </div>
+            <div class="dash-field">
+                <label>Комментарий администратора</label>
+                {{ form.admin_comment }}
+            </div>
+            <button type="submit" class="dbtn dbtn--primary" style="width:100%;justify-content:center;">Сохранить</button>
+        </form>
+        <a href="{% url 'dashboard:print_list' %}" class="dbtn dbtn--outline" style="width:100%;justify-content:center;margin-top:10px;">Ко всем заявкам</a>
+    </div>
+</div>
+{% endblock %}

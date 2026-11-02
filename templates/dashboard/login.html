@@ -1,0 +1,41 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в панель управления — PrintStudio3D</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div class="dash-login">
+        <div class="dash-login__card">
+            <div class="dash-login__logo">
+                {% include "components/cube-logo.html" with size=34 %}
+                <span class="dash-login__logo-text">Print<span>Studio</span>3D</span>
+            </div>
+            <p class="dash-login__subtitle">ПАНЕЛЬ УПРАВЛЕНИЯ · ТОЛЬКО ДЛЯ СОТРУДНИКОВ</p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="dash-alert dash-alert--{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                <div class="dash-field">
+                    <label for="{{ form.username.id_for_label }}">Логин</label>
+                    {{ form.username }}
+                </div>
+                <div class="dash-field">
+                    <label for="{{ form.password.id_for_label }}">Пароль</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="dbtn dbtn--primary">Войти</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

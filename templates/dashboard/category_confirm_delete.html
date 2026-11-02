@@ -1,0 +1,14 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Удалить категорию{% endblock %}
+{% block page_title %}Удалить категорию{% endblock %}
+
+{% block content %}
+<div class="dash-panel" style="max-width:480px;">
+    <p>Удалить категорию «<strong>{{ category.name }}</strong>»? Товары в этой категории останутся, но потеряют привязку к ней.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="dbtn dbtn--danger">Да, удалить</button>
+        <a href="{% url 'dashboard:category_list' %}" class="dbtn dbtn--outline">Отмена</a>
+    </form>
+</div>
+{% endblock %}

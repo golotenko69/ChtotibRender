@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Оформление заявки — PrintStudio3D{% endblock %}
+
+{% block content %}
+<section class="section section--warm">
+    <div class="container narrow">
+        <span class="section-label">Оформление</span>
+        <h1 class="extrude-line" style="margin-bottom:36px;">Оформить заявку</h1>
+
+        <div class="checkout-summary">
+            <p class="form-field label" style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-muted);margin:0 0 10px;">Ваш заказ</p>
+            <ul class="list">
+                {% for entry in cart %}
+                    <li>{{ entry.product.name }} × {{ entry.quantity }} — {{ entry.subtotal|floatformat:0|intcomma }} ₽</li>
+                {% endfor %}
+            </ul>
+            <p style="font-family:var(--font-mono);font-weight:700;margin:0;">Итого: {{ cart.get_total_price|floatformat:0|intcomma }} ₽</p>
+        </div>
+
+        <form method="post" class="form" novalidate>
+            {% csrf_token %}
+            {% include "components/forms.html" with field=form.first_name %}
+            {% include "components/forms.html" with field=form.last_name %}
+            {% include "components/forms.html" with field=form.phone %}
+            {% include "components/forms.html" with field=form.email %}
+            {% include "components/forms.html" with field=form.city %}
+            {% include "components/forms.html" with field=form.address %}
+            {% include "components/forms.html" with field=form.comment %}
+            <button type="submit" class="btn btn--primary btn--lg">Отправить заявку</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

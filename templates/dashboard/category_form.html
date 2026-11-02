@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if is_new %}Новая категория{% else %}{{ category.name }}{% endif %}{% endblock %}
+{% block page_title %}{% if is_new %}Новая категория{% else %}Редактировать категорию{% endif %}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" style="max-width:520px;">
+    {% csrf_token %}
+    <div class="dash-panel">
+        <div class="dash-field">
+            <label>Название</label>
+            {{ form.name }}
+            {% if form.name.errors %}<div class="dash-error">{{ form.name.errors|striptags }}</div>{% endif %}
+        </div>
+        <div class="dash-field">
+            <label>Описание</label>
+            {{ form.description }}
+        </div>
+        <div class="dash-field">
+            {% if category.image %}<img src="{{ category.image.url }}" style="width:100%;max-width:220px;border-radius:10px;margin-bottom:8px;">{% endif %}
+            <label>Изображение</label>
+            {{ form.image }}
+        </div>
+        <div class="dash-checkbox-row">{{ form.is_active }} <label>Категория активна</label></div>
+    </div>
+    <div class="dash-panel">
+        <button type="submit" class="dbtn dbtn--primary">{% if is_new %}Создать категорию{% else %}Сохранить{% endif %}</button>
+        <a href="{% url 'dashboard:category_list' %}" class="dbtn dbtn--outline">Отмена</a>
+    </div>
+</form>
+{% endblock %}

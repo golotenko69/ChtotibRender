@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Каталог товаров — PrintStudio3D{% endblock %}
+
+{% block content %}
+<section class="section section--dark" style="position:relative;overflow:hidden;padding:56px 0 40px;">
+    <div class="texture-overlay fdm-layers"></div>
+    <div class="texture-overlay blueprint-grid"></div>
+    <div class="container" style="position:relative;">
+        <span class="section-label">01 / Каталог</span>
+        <h1 style="color:#fff;margin-bottom:0;">Готовые изделия</h1>
+    </div>
+</section>
+
+<section class="section section--warm">
+    <div class="container">
+        <form method="get" class="catalog-filters">
+            <input type="text" name="q" value="{{ query }}" placeholder="Поиск по названию или артикулу" class="form-input">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.slug }}" {% if active_category.slug == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="sort" class="form-select" onchange="this.form.submit()">
+                <option value="new" {% if sort == "new" %}selected{% endif %}>Сначала новые</option>
+                <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>Сначала дешевле</option>
+                <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>Сначала дороже</option>
+                <option value="name" {% if sort == "name" %}selected{% endif %}>По названию</option>
+            </select>
+            <button type="submit" class="btn btn--primary">Применить</button>
+        </form>
+
+        {% if page_obj.object_list %}
+            <div class="product-grid">
+                {% for product in page_obj %}
+                    {% include "components/product-card.html" with product=product %}
+                {% endfor %}
+            </div>
+
+            {% if page_obj.has_other_pages %}
+            <nav class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}&category={{ active_category.slug|default:'' }}&sort={{ sort }}">&larr; Назад</a>
+                {% endif %}
+                <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&q={{ query }}&category={{ active_category.slug|default:'' }}&sort={{ sort }}">Вперед &rarr;</a>
+                {% endif %}
+            </nav>
+            {% endif %}
+        {% else %}
+            <p class="empty-state">Ничего не найдено. Попробуйте изменить фильтры.</p>
+        {% endif %}
+
+        <div style="margin-top:40px;text-align:center;">
+            <a href="{% url 'print_requests:form' %}" class="btn btn--outline">Нужного товара нет? Напечатаем по вашей модели →</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

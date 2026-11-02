@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — PrintStudio3D{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h1>ADMIN DASHBOARD</h1>
+
+    <div class="dashboard-stats">
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ new_total }}</span><span>Новые заявки</span></div>
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ new_print_requests }}</span><span>На печать</span></div>
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ new_scanning_requests }}</span><span>На сканирование</span></div>
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ new_order_requests }}</span><span>Заказы товаров</span></div>
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ in_progress_total }}</span><span>В работе</span></div>
+        <div class="dashboard-stat"><span class="dashboard-stat__value">{{ completed_total }}</span><span>Завершенные</span></div>
+    </div>
+
+    <div class="dashboard-actions">
+        <a href="/admin/orders/orderrequest/" class="btn btn--outline">Все заявки на товары</a>
+        <a href="/admin/print_requests/customprintrequest/" class="btn btn--outline">Печать</a>
+        <a href="/admin/scanning/scanningrequest/" class="btn btn--outline">Сканирование</a>
+        <a href="/admin/orders/orderrequest/" class="btn btn--outline">Заказы товаров</a>
+        <a href="/admin/products/product/" class="btn btn--outline">Товары</a>
+    </div>
+
+    <h2 class="section__title">Последние заявки</h2>
+    <div class="dashboard-recent">
+        <div>
+            <h3>Товары</h3>
+            <ul class="list">
+                {% for r in recent_orders %}
+                    <li><a href="/admin/orders/orderrequest/{{ r.pk }}/change/">{{ r.request_number }}</a> — {{ r.full_name }} ({{ r.get_status_display }})</li>
+                {% empty %}<li>Нет заявок</li>{% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Печать</h3>
+            <ul class="list">
+                {% for r in recent_prints %}
+                    <li><a href="/admin/print_requests/customprintrequest/{{ r.pk }}/change/">{{ r.request_number }}</a> — {{ r.name }} ({{ r.get_status_display }})</li>
+                {% empty %}<li>Нет заявок</li>{% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Сканирование</h3>
+            <ul class="list">
+                {% for r in recent_scans %}
+                    <li><a href="/admin/scanning/scanningrequest/{{ r.pk }}/change/">{{ r.request_number }}</a> — {{ r.name }} ({{ r.get_status_display }})</li>
+                {% empty %}<li>Нет заявок</li>{% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

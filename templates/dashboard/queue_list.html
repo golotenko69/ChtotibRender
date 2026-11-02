@@ -1,0 +1,46 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form method="get" class="dash-filterbar">
+    <input type="text" name="q" value="{{ query }}" placeholder="Поиск по номеру, телефону, email" class="dash-input" style="max-width:280px;">
+    <div class="dash-filterbar__tabs">
+        <a href="?{% if query %}q={{ query }}&{% endif %}" class="dash-tab {% if not status %}is-active{% endif %}">Все</a>
+        {% for code, label in status_choices %}
+            <a href="?status={{ code }}{% if query %}&q={{ query }}{% endif %}" class="dash-tab {% if status == code %}is-active{% endif %}">{{ label }}</a>
+        {% endfor %}
+    </div>
+    <button type="submit" class="dbtn dbtn--outline">Найти</button>
+</form>
+
+{% if page_obj.object_list %}
+<div class="dash-table-wrap">
+    <table class="dash-table">
+        <thead><tr><th>№ заявки</th><th>Клиент</th><th>Телефон</th><th>Статус</th><th>Создана</th><th></th></tr></thead>
+        <tbody>
+            {% for obj in page_obj %}
+            <tr>
+                <td><a href="{% url detail_url obj.pk %}">{{ obj.request_number }}</a></td>
+                <td>{% firstof obj.full_name obj.name %}</td>
+                <td>{{ obj.phone }}</td>
+                <td><span class="dash-pill dash-pill--{{ obj.status }}">{{ obj.get_status_display }}</span></td>
+                <td>{{ obj.created_at|date:"d.m.Y H:i" }}</td>
+                <td><a href="{% url detail_url obj.pk %}" class="dbtn dbtn--outline dbtn--sm">Открыть</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="dash-pagination">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}{% if status %}&status={{ status }}{% endif %}">&larr;</a>{% endif %}
+    <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}{% if status %}&status={{ status }}{% endif %}">&rarr;</a>{% endif %}
+</div>
+{% endif %}
+{% else %}
+<p class="dash-empty">Заявок не найдено.</p>
+{% endif %}
+{% endblock %}

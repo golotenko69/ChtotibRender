@@ -1,0 +1,69 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Дашборд{% endblock %}
+{% block page_title %}Дашборд{% endblock %}
+
+{% block content %}
+<div class="dash-stats-grid">
+    <div class="dash-stat-card dash-stat-card--accent">
+        <div class="dash-stat-card__label">Новые заявки</div>
+        <div class="dash-stat-card__value">{{ new_total }}</div>
+    </div>
+    <div class="dash-stat-card">
+        <div class="dash-stat-card__label">В работе</div>
+        <div class="dash-stat-card__value">{{ in_progress_total }}</div>
+    </div>
+    <div class="dash-stat-card">
+        <div class="dash-stat-card__label">Завершено</div>
+        <div class="dash-stat-card__value">{{ completed_total }}</div>
+    </div>
+    <div class="dash-stat-card dash-stat-card--dark">
+        <div class="dash-stat-card__label">Товаров в каталоге</div>
+        <div class="dash-stat-card__value">{{ products_total }}</div>
+    </div>
+</div>
+
+<div class="dash-queue-grid">
+    {% for s in stats %}
+    <div class="dash-queue-card">
+        <h3>{{ s.label }}</h3>
+        <div class="dash-queue-card__row"><span>Новые</span><strong>{{ s.new }}</strong></div>
+        <div class="dash-queue-card__row"><span>В работе</span><strong>{{ s.in_progress }}</strong></div>
+        <div class="dash-queue-card__row"><span>Завершено</span><strong>{{ s.done }}</strong></div>
+        <div class="dash-queue-card__row"><span>Всего</span><strong>{{ s.total }}</strong></div>
+        <a href="{{ s.list_url }}" class="dbtn dbtn--outline dbtn--sm" style="margin-top:10px;">Открыть все</a>
+    </div>
+    {% endfor %}
+    <div class="dash-queue-card">
+        <h3>Каталог</h3>
+        <div class="dash-queue-card__row"><span>Всего товаров</span><strong>{{ products_total }}</strong></div>
+        <div class="dash-queue-card__row"><span>Нет в наличии</span><strong>{{ products_out_of_stock }}</strong></div>
+        <div class="dash-queue-card__row"><span>Категорий</span><strong>{{ categories_total }}</strong></div>
+        <a href="{% url 'dashboard:product_list' %}" class="dbtn dbtn--outline dbtn--sm" style="margin-top:10px;">Управлять товарами</a>
+    </div>
+</div>
+
+<div class="dash-panel">
+    <h2 class="dash-section-title">Последняя активность</h2>
+    {% if recent_feed %}
+        <div class="dash-table-wrap">
+            <table class="dash-table">
+                <thead><tr><th>№ заявки</th><th>Тип</th><th>Клиент</th><th>Статус</th><th>Создана</th><th></th></tr></thead>
+                <tbody>
+                    {% for item in recent_feed %}
+                    <tr>
+                        <td><a href="{{ item.url }}">{{ item.number }}</a></td>
+                        <td>{{ item.kind }}</td>
+                        <td>{{ item.who }}</td>
+                        <td><span class="dash-pill dash-pill--{{ item.status_code }}">{{ item.status }}</span></td>
+                        <td>{{ item.created_at|date:"d.m.Y H:i" }}</td>
+                        <td><a href="{{ item.url }}" class="dbtn dbtn--outline dbtn--sm">Открыть</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="dash-empty">Пока нет заявок.</p>
+    {% endif %}
+</div>
+{% endblock %}

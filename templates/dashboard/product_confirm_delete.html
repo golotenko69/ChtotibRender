@@ -1,0 +1,14 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Удалить товар{% endblock %}
+{% block page_title %}Удалить товар{% endblock %}
+
+{% block content %}
+<div class="dash-panel" style="max-width:480px;">
+    <p>Удалить товар «<strong>{{ product.name }}</strong>»? Это действие необратимо. Заявки, уже содержащие этот товар, сохранят снэпшот его названия и цены.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="dbtn dbtn--danger">Да, удалить</button>
+        <a href="{% url 'dashboard:product_list' %}" class="dbtn dbtn--outline">Отмена</a>
+    </form>
+</div>
+{% endblock %}

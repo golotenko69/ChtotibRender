@@ -1,0 +1,101 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if is_new %}Новый товар{% else %}{{ product.name }}{% endif %}{% endblock %}
+{% block page_title %}{% if is_new %}Новый товар{% else %}Редактировать товар{% endif %}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="dash-detail-grid">
+        <div>
+            <div class="dash-panel">
+                <h2 class="dash-section-title">Основная информация</h2>
+                <div class="dash-form-grid">
+                    <div class="dash-field dash-field--full">
+                        <label>Название</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}<div class="dash-error">{{ form.name.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="dash-field">
+                        <label>Категория</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="dash-field">
+                        <label>Артикул (SKU)</label>
+                        {{ form.sku }}
+                        {% if form.sku.errors %}<div class="dash-error">{{ form.sku.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="dash-field dash-field--full">
+                        <label>Краткое описание (для карточки)</label>
+                        {{ form.short_description }}
+                    </div>
+                    <div class="dash-field dash-field--full">
+                        <label>Полное описание</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="dash-field">
+                        <label>Цена, ₽</label>
+                        {{ form.price }}
+                        {% if form.price.errors %}<div class="dash-error">{{ form.price.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="dash-field">
+                        <label>Старая цена, ₽ (для скидки)</label>
+                        {{ form.old_price }}
+                    </div>
+                    <div class="dash-field">
+                        <label>Остаток на складе</label>
+                        {{ form.stock }}
+                    </div>
+                </div>
+                <div class="dash-checkbox-row">{{ form.is_active }} <label>Товар активен (виден в каталоге)</label></div>
+                <div class="dash-checkbox-row">{{ form.is_featured }} <label>Показывать в разделе «Популярные»</label></div>
+            </div>
+
+            <div class="dash-panel">
+                <h2 class="dash-section-title">Дополнительные фотографии</h2>
+                {{ formset.management_form }}
+                {% for image_form in formset %}
+                    <div class="dash-image-tile">
+                        {% if image_form.instance.pk and image_form.instance.image %}
+                            <img src="{{ image_form.instance.image.url }}" class="dash-image-tile__preview" alt="">
+                        {% endif %}
+                        {{ image_form.id }}
+                        <div class="dash-form-grid">
+                            <div class="dash-field"><label>Файл</label>{{ image_form.image }}</div>
+                            <div class="dash-field"><label>Alt-текст</label>{{ image_form.alt_text }}</div>
+                            <div class="dash-field"><label>Порядок</label>{{ image_form.sort_order }}</div>
+                            {% if image_form.instance.pk %}
+                                <div class="dash-checkbox-row">{{ image_form.DELETE }} <label>Удалить это фото</label></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div>
+            <div class="dash-panel">
+                <h2 class="dash-section-title">Главное изображение</h2>
+                {% if product.main_image %}
+                    <img src="{{ product.main_image.url }}" id="main-image-preview" style="width:100%;border-radius:10px;margin-bottom:10px;">
+                {% else %}
+                    <img src="" id="main-image-preview" style="width:100%;border-radius:10px;margin-bottom:10px;display:none;">
+                {% endif %}
+                {{ form.main_image }}
+            </div>
+
+            <div class="dash-panel">
+                <button type="submit" class="dbtn dbtn--primary" style="width:100%;justify-content:center;">
+                    {% if is_new %}Создать товар{% else %}Сохранить изменения{% endif %}
+                </button>
+                <a href="{% url 'dashboard:product_list' %}" class="dbtn dbtn--outline" style="width:100%;justify-content:center;margin-top:10px;">Отмена</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.querySelector('input[name="main_image"]').setAttribute('data-preview-input', 'main-image-preview');
+</script>
+{% endblock %}

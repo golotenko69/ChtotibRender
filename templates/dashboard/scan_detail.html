@@ -1,0 +1,72 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ scan_request.request_number }}{% endblock %}
+{% block page_title %}Заявка {{ scan_request.request_number }}{% endblock %}
+{% block topbar_actions %}<span class="dash-pill dash-pill--{{ scan_request.status }}">{{ scan_request.get_status_display }}</span>{% endblock %}
+
+{% block content %}
+<div class="dash-detail-grid">
+    <div>
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Клиент</h2>
+            <dl class="dash-kv">
+                <dt>Имя</dt><dd>{{ scan_request.name }}</dd>
+                <dt>Телефон</dt><dd><a href="tel:{{ scan_request.phone }}">{{ scan_request.phone }}</a></dd>
+                <dt>Email</dt><dd>{{ scan_request.email|default:"—" }}</dd>
+                <dt>Город</dt><dd>{{ scan_request.city|default:"—" }}</dd>
+                <dt>Создана</dt><dd>{{ scan_request.created_at|date:"d.m.Y H:i" }}</dd>
+            </dl>
+        </div>
+
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Объект</h2>
+            <dl class="dash-kv">
+                <dt>Название</dt><dd>{{ scan_request.object_name }}</dd>
+                <dt>Размеры</dt><dd>{{ scan_request.dimensions|default:"—" }}</dd>
+                <dt>Количество</dt><dd>{{ scan_request.quantity }}</dd>
+                <dt>Срок</dt><dd>{{ scan_request.deadline|date:"d.m.Y"|default:"—" }}</dd>
+                <dt>Только скан</dt><dd>{% if scan_request.scanning_only %}Да{% else %}Нет{% endif %}</dd>
+                <dt>Постобработка</dt><dd>{% if scan_request.post_processing %}Да{% else %}Нет{% endif %}</dd>
+                <dt>Формат результата</dt><dd>{{ scan_request.get_output_format_display }}</dd>
+            </dl>
+            {% if scan_request.description %}
+                <h3 style="font-size:.9rem;margin:14px 0 4px;">Описание</h3>
+                <p>{{ scan_request.description|linebreaks }}</p>
+            {% endif %}
+            {% if scan_request.comment %}
+                <h3 style="font-size:.9rem;margin:14px 0 4px;">Комментарий клиента</h3>
+                <p>{{ scan_request.comment|linebreaks }}</p>
+            {% endif %}
+        </div>
+
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Фотографии объекта</h2>
+            <div class="dash-photo-grid">
+                {% for photo in scan_request.images.all %}
+                    <a href="{{ photo.image.url }}" target="_blank"><img src="{{ photo.image.url }}" alt=""></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-panel">
+        <h2 class="dash-section-title">Управление заявкой</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="dash-field">
+                <label>Статус</label>
+                {{ form.status }}
+            </div>
+            <div class="dash-field">
+                <label>Ориентировочная цена, ₽</label>
+                {{ form.estimated_price }}
+            </div>
+            <div class="dash-field">
+                <label>Комментарий администратора</label>
+                {{ form.admin_comment }}
+            </div>
+            <button type="submit" class="dbtn dbtn--primary" style="width:100%;justify-content:center;">Сохранить</button>
+        </form>
+        <a href="{% url 'dashboard:scan_list' %}" class="dbtn dbtn--outline" style="width:100%;justify-content:center;margin-top:10px;">Ко всем заявкам</a>
+    </div>
+</div>
+{% endblock %}

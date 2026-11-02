@@ -1,0 +1,14 @@
+{% comment %}
+Drag-and-drop file upload zone. Include with:
+{% include "components/file-upload.html" with field=form.model_file zone_id="model-upload" hint="STL, OBJ, 3MF, STEP, STP" %}
+{% endcomment %}
+<div class="upload-zone" id="{{ zone_id }}" data-upload-zone>
+    <div class="upload-zone__drop" data-upload-drop>
+        <div class="upload-zone__icon">⬆</div>
+        <p><strong>Перетащите файл сюда</strong></p>
+        <p class="upload-zone__hint">или выберите файл {% if hint %}({{ hint }}){% endif %}</p>
+        {{ field }}
+    </div>
+    <ul class="upload-zone__list" data-upload-list></ul>
+    {% if field.errors %}<div class="form-error">{{ field.errors|striptags }}</div>{% endif %}
+</div>

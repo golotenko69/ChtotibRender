@@ -1,0 +1,24 @@
+{% load static %}
+<header class="navbar">
+    <div class="container navbar__inner">
+        <a href="{% url 'core:home' %}" class="navbar__logo">
+            {% include "components/cube-logo.html" with size=30 %}
+            <span>
+                <span class="navbar__logo-text">Print<span style="color:var(--color-accent)">Studio</span>3D</span>
+                <span class="navbar__logo-tag">3D-печать · сканирование</span>
+            </span>
+        </a>
+        <nav class="navbar__nav">
+            <a href="{% url 'products:catalog' %}">Каталог</a>
+            <a href="{% url 'core:home' %}#process">Как это работает</a>
+            <a href="{% url 'print_requests:form' %}">Печать модели</a>
+            <a href="{% url 'scanning:form' %}">3D-сканирование</a>
+            <a href="{% url 'core:contact' %}">Контакты</a>
+        </nav>
+        <a href="{% url 'orders:cart_detail' %}" class="navbar__cart">
+            Заявка
+            <span class="navbar__cart-count">{{ cart|length }}</span>
+        </a>
+        <button class="navbar__burger" type="button" aria-label="Меню">☰</button>
+    </div>
+</header>

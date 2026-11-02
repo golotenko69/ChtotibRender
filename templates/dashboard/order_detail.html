@@ -1,0 +1,64 @@
+{% extends "dashboard/base.html" %}
+{% load humanize %}
+{% block title %}{{ order.request_number }}{% endblock %}
+{% block page_title %}Заявка {{ order.request_number }}{% endblock %}
+{% block topbar_actions %}<span class="dash-pill dash-pill--{{ order.status }}">{{ order.get_status_display }}</span>{% endblock %}
+
+{% block content %}
+<div class="dash-detail-grid">
+    <div>
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Клиент</h2>
+            <dl class="dash-kv">
+                <dt>Имя</dt><dd>{{ order.full_name }}</dd>
+                <dt>Телефон</dt><dd><a href="tel:{{ order.phone }}">{{ order.phone }}</a></dd>
+                <dt>Email</dt><dd>{{ order.email|default:"—" }}</dd>
+                <dt>Город</dt><dd>{{ order.city|default:"—" }}</dd>
+                <dt>Адрес</dt><dd>{{ order.address|default:"—" }}</dd>
+                <dt>Создана</dt><dd>{{ order.created_at|date:"d.m.Y H:i" }}</dd>
+            </dl>
+            {% if order.comment %}
+                <h2 class="dash-section-title" style="margin-top:16px;">Комментарий клиента</h2>
+                <p>{{ order.comment|linebreaks }}</p>
+            {% endif %}
+        </div>
+
+        <div class="dash-panel">
+            <h2 class="dash-section-title">Состав заявки</h2>
+            <div class="dash-table-wrap">
+                <table class="dash-table">
+                    <thead><tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr></thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td>{{ item.product_name }}{% if not item.product %} <span style="color:var(--d-muted);">(товар удален)</span>{% endif %}</td>
+                            <td>{{ item.price|floatformat:0|intcomma }} ₽</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.subtotal|floatformat:0|intcomma }} ₽</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top:12px;font-weight:700;">Итого: {{ order.total_price|floatformat:0|intcomma }} ₽</p>
+        </div>
+    </div>
+
+    <div class="dash-panel">
+        <h2 class="dash-section-title">Управление заявкой</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="dash-field">
+                <label>Статус</label>
+                {{ form.status }}
+            </div>
+            <div class="dash-field">
+                <label>Комментарий администратора</label>
+                {{ form.admin_comment }}
+            </div>
+            <button type="submit" class="dbtn dbtn--primary" style="width:100%;justify-content:center;">Сохранить</button>
+        </form>
+        <a href="{% url 'dashboard:order_list' %}" class="dbtn dbtn--outline" style="width:100%;justify-content:center;margin-top:10px;">Ко всем заявкам</a>
+    </div>
+</div>
+{% endblock %}

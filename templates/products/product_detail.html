@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}{{ product.name }} — PrintStudio3D{% endblock %}
+{% block meta_description %}{{ product.short_description|default:product.name }}{% endblock %}
+
+{% block content %}
+<section class="section section--white">
+    <div class="container">
+        <div class="product-detail">
+            <div class="product-detail__gallery">
+                {% if product.main_image %}
+                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="product-detail__main-image">
+                {% else %}
+                    <div class="product-detail__placeholder">{% include "components/cube-logo.html" with size=90 %}</div>
+                {% endif %}
+                {% if product.images.all %}
+                    <div class="product-detail__thumbs">
+                        {% for img in product.images.all %}
+                            <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                {% if product.category %}<span class="section-label" style="margin-bottom:8px;">{{ product.category.name }}</span>{% endif %}
+                <h1>{{ product.name }}</h1>
+                <div class="product-detail__price">
+                    {{ product.price|floatformat:0|intcomma }} ₽
+                    {% if product.old_price %}<span class="product-card__old-price">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
+                </div>
+                <p class="product-detail__stock {% if not product.is_in_stock %}product-detail__stock--out{% endif %}">
+                    {% if product.is_in_stock %}● В наличии{% else %}● Нет в наличии{% endif %}
+                </p>
+                {% if product.description %}<p>{{ product.description|linebreaks }}</p>{% endif %}
+
+                <form method="post" action="{% url 'orders:cart_add' product.id %}" class="product-detail__add-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type="number" id="qty" name="quantity" value="1" min="1" class="form-input form-input--qty">
+                    <button type="submit" class="btn btn--primary btn--lg" {% if not product.is_in_stock %}disabled{% endif %}>Добавить в заявку</button>
+                </form>
+                <p class="product-detail__sku">Артикул: {{ product.sku }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if related %}
+<section class="section section--warm">
+    <div class="container">
+        <span class="section-label">Похожие товары</span>
+        <h2 class="extrude-line" style="margin-bottom:36px;">Вам может понравиться</h2>
+        <div class="product-grid">
+            {% for p in related %}
+                {% include "components/product-card.html" with product=p %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

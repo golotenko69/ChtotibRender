@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Контакты — PrintStudio3D{% endblock %}
+{% block content %}
+<section class="section section--dark" style="position:relative;overflow:hidden;padding:64px 0;">
+    <div class="texture-overlay fdm-layers"></div>
+    <div class="texture-overlay blueprint-grid"></div>
+    <div class="container narrow" style="position:relative;">
+        <span class="section-label">06 / Контакты</span>
+        <h1 style="color:#fff;">Свяжитесь с нами</h1>
+        <p style="color:rgba(255,255,255,.6);">Опишите задачу или прикрепите файл модели — рассчитаем стоимость и ответим в течение часа.</p>
+    </div>
+</section>
+<section class="section section--white">
+    <div class="container narrow">
+        <div class="contact-grid">
+            <div>
+                <h3>Телефон</h3>
+                <p><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
+            </div>
+            <div>
+                <h3>Email</h3>
+                <p><a href="mailto:hello@3dprint.example">hello@3dprint.example</a></p>
+            </div>
+            <div>
+                <h3>Адрес</h3>
+                <p>г. Москва, ул. Примерная, д. 1</p>
+            </div>
+            <div>
+                <h3>Режим работы</h3>
+                <p>Пн–Пт: 10:00–19:00</p>
+            </div>
+        </div>
+        <p class="section__lead">Есть проект? <a href="{% url 'print_requests:form' %}">Закажите печать модели</a> или <a href="{% url 'scanning:form' %}">3D-сканирование</a>.</p>
+    </div>
+</section>
+{% endblock %}
