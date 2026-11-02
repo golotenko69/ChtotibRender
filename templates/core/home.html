@@ -38,15 +38,25 @@
                 <div class="vase">
                     <div class="vase__spin">
                         <div class="vase__wrap">
-                            <svg role="img" aria-label="Витая ваза, печатается слой за слоем" viewBox="0 0 300 390" width="300" height="390">
+                            <svg role="img" aria-label="Фигурка котика, печатается слой за слоем" viewBox="0 0 300 390" width="300" height="390">
                                 <defs>
                                     <linearGradient id="vaseG" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#5FD4C4" stop-opacity=".85"/><stop offset=".16" stop-color="#2F5553"/><stop offset=".5" stop-color="#B9A58E"/><stop offset=".82" stop-color="#FF9C52"/><stop offset="1" stop-color="#FFC48A"/></linearGradient>
                                     <pattern id="lay" width="6" height="4" patternUnits="userSpaceOnUse"><rect width="6" height="1.2" fill="rgba(10,18,22,.28)"/></pattern>
+                                    <g id="catShape">
+                                        <path d="M226 384 C268 382 292 346 280 304 C273 280 254 282 258 300 C266 334 254 360 222 364 Z"/>
+                                        <path d="M70 388 C56 340 60 282 88 238 C100 216 104 198 100 180 C84 170 72 148 74 120 C75 98 82 80 92 68 L84 6 L128 44 C142 40 158 40 172 44 L216 6 L208 68 C218 80 225 98 226 120 C228 148 216 170 200 180 C196 198 200 216 212 238 C240 282 244 340 230 388 Z"/>
+                                    </g>
                                 </defs>
-                                <path d="M98 388 C70 330 46 270 70 210 C88 165 70 120 96 70 C104 52 106 30 102 4 L198 4 C194 30 196 52 204 70 C230 120 212 165 230 210 C254 270 230 330 202 388 Z" fill="url(#vaseG)"/>
-                                <path d="M98 388 C70 330 46 270 70 210 C88 165 70 120 96 70 C104 52 106 30 102 4 L198 4 C194 30 196 52 204 70 C230 120 212 165 230 210 C254 270 230 330 202 388 Z" fill="url(#lay)"/>
-                                <g fill="none" stroke="rgba(10,18,22,.22)" stroke-width="2"><path d="M120 388 C150 300 90 230 130 140 C150 90 120 50 128 4"/><path d="M150 388 C185 300 120 230 160 140 C180 90 150 50 156 4"/><path d="M180 388 C215 300 150 230 190 140 C205 90 180 50 182 4"/></g>
-                                <ellipse cx="150" cy="4" rx="48" ry="5" fill="#1A2A30" stroke="rgba(255,176,102,.6)"/>
+                                <use href="#catShape" fill="url(#vaseG)"/>
+                                <use href="#catShape" fill="url(#lay)"/>
+                                <g fill="rgba(10,18,22,.22)"><path d="M93 24 L120 46 L98 60 Z"/><path d="M207 24 L180 46 L202 60 Z"/></g>
+                                <g fill="#14262C"><ellipse cx="126" cy="114" rx="8" ry="11"/><ellipse cx="174" cy="114" rx="8" ry="11"/><path d="M142 136 h16 l-8 9 Z"/></g>
+                                <g fill="none" stroke="rgba(10,18,22,.4)" stroke-width="2" stroke-linecap="round">
+                                    <path d="M150 145 C146 154 138 156 133 151 M150 145 C154 154 162 156 167 151"/>
+                                    <path d="M118 140 L84 134 M118 147 L86 152 M182 140 L216 134 M182 147 L214 152"/>
+                                    <path d="M150 196 C140 230 140 260 150 292 C160 260 160 230 150 196" stroke="rgba(10,18,22,.18)"/>
+                                    <path d="M132 388 C132 362 138 346 150 340 C162 346 168 362 168 388" stroke="rgba(10,18,22,.28)"/>
+                                </g>
                             </svg>
                         </div>
                     </div>
@@ -66,8 +76,8 @@
                     <span class="mini-bar"><i></i></span>
                 </div>
                 <div class="glass mono float-card float-card--b" aria-hidden="true">
-                    <span>Ваза «Твист»</span>
-                    <span style="color:var(--amber-2)">PLA · 24 см · 9 ч</span>
+                    <span>Котик «Мурчик»</span>
+                    <span style="color:var(--amber-2)">PLA · 18 см · 7 ч</span>
                 </div>
                 <div class="glass mono float-card float-card--c" aria-hidden="true">
                     <span style="color:var(--mint)">±0.2 мм</span>
