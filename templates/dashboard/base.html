@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Панель управления{% endblock %} — PrintStudio3D</title>
+    <title>{% block title %}Панель управления{% endblock %} — Чтотиб Render</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     {% block extra_head %}{% endblock %}
@@ -13,7 +13,7 @@
         <a href="{% url 'dashboard:home' %}" class="dash-sidebar__logo">
             {% include "components/cube-logo.html" with size=28 %}
             <span>
-                <span class="dash-sidebar__logo-text">Print<span>Studio</span>3D</span>
+                <span class="dash-sidebar__logo-text">Чтотиб <span>Render</span></span>
                 <span class="dash-sidebar__logo-tag">Панель управления</span>
             </span>
         </a>

@@ -31,6 +31,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 
-admin.site.site_header = "3D-печать — администрирование"
-admin.site.site_title = "3D-печать Admin"
+admin.site.site_header = "Чтотиб Render — администрирование"
+admin.site.site_title = "Чтотиб Render Admin"
 admin.site.index_title = "Панель управления"

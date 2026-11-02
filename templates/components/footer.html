@@ -3,7 +3,7 @@
         <div class="footer__brand">
             <a href="{% url 'core:home' %}" class="navbar__logo" style="color:#fff;">
                 {% include "components/cube-logo.html" with size=28 %}
-                <span class="navbar__logo-text">Print<span style="color:var(--color-accent)">Studio</span>3D</span>
+                <span class="navbar__logo-text">Чтотиб <span style="color:var(--color-accent)">Render</span></span>
             </a>
             <p>Готовые изделия, печать ваших 3D-моделей и профессиональное 3D-сканирование — слой за слоем, без лишних формальностей.</p>
             <a href="{% url 'orders:cart_detail' %}" class="btn btn--primary btn--sm">Оставить заявку</a>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="container footer__bottom">
-        <p>&copy; {% now "Y" %} PrintStudio3D. Все права защищены.</p>
+        <p>&copy; {% now "Y" %} Чтотиб Render. Все права защищены.</p>
         <p>3D-ПЕЧАТЬ · 3D-СКАНИРОВАНИЕ · ИЗГОТОВЛЕНИЕ НА ЗАКАЗ</p>
     </div>
 </footer>
