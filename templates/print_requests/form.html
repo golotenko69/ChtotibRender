@@ -1,50 +1,58 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Заказать печать своей модели — Чтотиб Render{% endblock %}
 
 {% block content %}
-<section class="section section--dark" style="position:relative;overflow:hidden;padding:64px 0 48px;">
-    <div class="texture-overlay fdm-layers"></div>
-    <div class="texture-overlay blueprint-grid"></div>
-    <div class="container narrow" style="position:relative;">
-        <div class="service-card__icon" style="margin-bottom:22px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 17l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M2 12l10 5 10-5" stroke="#FF7A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+<section class="page-hero bg-parts">
+    <div class="page-hero__floor" aria-hidden="true"></div>
+    <img class="page-hero__illu" src="{% static 'img/filament-spool.svg' %}" alt="" aria-hidden="true">
+    <div class="container narrow">
+        <div class="service-card__icon" data-reveal="zoom">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
-        <span class="section-label">3D-печать на заказ</span>
-        <h1 style="color:#fff;">Заказать печать своей модели</h1>
-        <p style="color:rgba(255,255,255,.6);">Загрузите 3D-файл (STL, OBJ, 3MF, STEP, STP) и/или укажите ссылку на модель — мы оценим стоимость и материал.</p>
+        <span class="section-label" data-reveal>3D-печать на заказ</span>
+        <h1 class="split-words" data-split>Своя модель? Напечатаем <span class="serif">слой за слоем</span></h1>
+        <p data-reveal style="--d:.3s">Загрузите 3D-файл (STL, OBJ, 3MF, STEP, STP) и/или укажите ссылку на модель — инженер оценит стоимость и подберёт материал.</p>
     </div>
 </section>
 
-<section class="section section--white">
+<section class="section" style="padding-top:10px;">
     <div class="container narrow">
-        <form method="post" enctype="multipart/form-data" class="form" novalidate>
+        <form method="post" enctype="multipart/form-data" class="form panel" novalidate data-reveal>
             {% csrf_token %}
             {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
 
-            {% include "components/forms.html" with field=form.name %}
-            {% include "components/forms.html" with field=form.phone %}
-            {% include "components/forms.html" with field=form.email %}
-            {% include "components/forms.html" with field=form.project_name %}
-            {% include "components/forms.html" with field=form.description %}
-            {% include "components/forms.html" with field=form.quantity %}
-            {% include "components/forms.html" with field=form.material %}
-            {% include "components/forms.html" with field=form.color %}
-            {% include "components/forms.html" with field=form.deadline %}
-            {% include "components/forms.html" with field=form.model_url %}
-
+            <span class="section-label">Модель</span>
             <div class="form-field">
                 <label>3D-файл модели (STL, OBJ, 3MF, STEP, STP)</label>
                 {% include "components/file-upload.html" with field=form.model_file zone_id="model-file-upload" hint="до 100 МБ" %}
             </div>
+            {% include "components/forms.html" with field=form.model_url %}
+            <div class="form-grid">
+                {% include "components/forms.html" with field=form.project_name %}
+                {% include "components/forms.html" with field=form.quantity %}
+                {% include "components/forms.html" with field=form.material %}
+                {% include "components/forms.html" with field=form.color %}
+            </div>
+            {% include "components/forms.html" with field=form.description %}
+            {% include "components/forms.html" with field=form.deadline %}
 
             <div class="form-field">
                 <label>Дополнительные фотографии (необязательно)</label>
                 {% include "components/file-upload.html" with field=form.photos zone_id="photos-upload" hint="JPG, PNG, WEBP, до 5 файлов" %}
             </div>
 
+            <div aria-hidden="true" class="layers-sep" style="margin:10px 0 26px;"></div>
+            <span class="section-label">Контакты</span>
+            <div class="form-grid">
+                {% include "components/forms.html" with field=form.name %}
+                {% include "components/forms.html" with field=form.phone %}
+            </div>
+            {% include "components/forms.html" with field=form.email %}
             {% include "components/forms.html" with field=form.comment %}
 
-            <button type="submit" class="btn btn--primary btn--lg">Отправить заявку</button>
+            <button type="submit" class="btn btn--primary btn--lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Отправить заявку</button>
         </form>
     </div>
 </section>

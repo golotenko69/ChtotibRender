@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
+
+/* Django admin re-skinned in the Чтотиб Render print-chamber palette.
+   Overrides admin's CSS variables for both of its colour schemes. */
+html, html[data-theme="light"], html[data-theme="dark"] {
+    color-scheme: dark;
+    --primary: #7DBFB4;
+    --secondary: #0F1C21;
+    --accent: #FFB066;
+    --primary-fg: #EEF2F1;
+    --body-fg: #C9D4D3;
+    --body-bg: #0A1216;
+    --body-quiet-color: #8FA3A6;
+    --body-medium-color: #A9BBBD;
+    --body-loud-color: #EEF2F1;
+    --header-color: #EEF2F1;
+    --header-branding-color: #EEF2F1;
+    --header-bg: rgba(15,28,33,.85);
+    --header-link-color: #C9D4D3;
+    --breadcrumbs-fg: #8FA3A6;
+    --breadcrumbs-link-fg: #7DBFB4;
+    --breadcrumbs-bg: rgba(255,255,255,.03);
+    --link-fg: #7DBFB4;
+    --link-hover-color: #A9D6CE;
+    --link-selected-fg: #FFB066;
+    --hairline-color: rgba(255,255,255,.08);
+    --border-color: rgba(255,255,255,.14);
+    --error-fg: #FF6B6B;
+    --message-success-bg: rgba(79,216,154,.12);
+    --message-warning-bg: rgba(242,193,78,.12);
+    --message-error-bg: rgba(255,107,107,.12);
+    --darkened-bg: rgba(255,255,255,.03);
+    --selected-bg: rgba(95,212,196,.1);
+    --selected-row: rgba(255,138,61,.1);
+    --button-fg: #1A0D04;
+    --button-bg: #FF8A3D;
+    --button-hover-bg: #FFB066;
+    --default-button-bg: #FF8A3D;
+    --default-button-hover-bg: #FFB066;
+    --close-button-bg: rgba(255,255,255,.12);
+    --close-button-hover-bg: rgba(255,255,255,.2);
+    --delete-button-bg: #C94545;
+    --delete-button-hover-bg: #FF6B6B;
+    --object-tools-fg: #1A0D04;
+    --object-tools-bg: #FF8A3D;
+    --object-tools-hover-bg: #FFB066;
+    --font-family-primary: 'Onest', system-ui, sans-serif;
+    --font-family-monospace: 'Onest', system-ui, sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(700px 500px at 90% -10%, rgba(255,138,61,.05), transparent 70%),
+        radial-gradient(600px 500px at 0% 110%, rgba(95,212,196,.07), transparent 70%),
+        #0A1216 fixed;
+}
+.theme-toggle { display: none !important; }
+
+#header {
+    margin: 12px; width: auto; border-radius: 24px; padding: 12px 22px;
+   
+    border: 1px solid rgba(255,255,255,.08); box-shadow: 0 20px 40px -24px rgba(0,0,0,.7);
+}
+#site-name .crt-brand { display: inline-flex; align-items: center; gap: 10px; color: #EEF2F1; font: 700 1rem 'Onest', sans-serif; letter-spacing: -0.02em; text-transform: uppercase; }
+#site-name .crt-brand em { font-style: normal; color: #FFB066; }
+#site-name .crt-brand small { font: 500 .6rem 'Onest', sans-serif; letter-spacing: .12em; color: #8FA3A6; margin-left: 6px; }
+#user-tools a { border-bottom: 0; }
+.crt-to-dash { display: inline-block; margin-right: 18px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(95,212,196,.35); font-size: .78rem; color: #A9D6CE !important; }
+
+div.breadcrumbs { margin: 0 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); padding: 10px 18px; }
+#content { padding: 24px 28px; }
+h1, h2 { font-family: 'Onest', sans-serif; letter-spacing: -0.02em; }
+#content h1 { color: #EEF2F1; font-weight: 700; }
+
+.module, #changelist, .inline-group, fieldset.module { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+.module h2, .module caption, .inline-group h2 { background: linear-gradient(90deg, rgba(95,212,196,.14), rgba(95,212,196,.02)); color: #EEF2F1; font: 600 .78rem 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 12px 16px; }
+#nav-sidebar { background: rgba(15,28,33,.6); border-right: 1px solid rgba(255,255,255,.06); }
+#nav-sidebar .current-model { background: rgba(255,138,61,.12); }
+
+input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, select, .vTextField {
+    background: rgba(255,255,255,.04); color: #EEF2F1; border: 1px solid rgba(255,255,255,.14); border-radius: 10px; padding: 8px 12px;
+    transition: border-color .25s, box-shadow .25s;
+}
+input:focus, textarea:focus, select:focus { border-color: #7DBFB4 !important; box-shadow: 0 0 0 3px rgba(95,212,196,.12); outline: none; }
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    border-radius: 999px; font-weight: 600; transition: transform .25s, box-shadow .25s, background .25s;
+}
+.button:hover, input[type=submit]:hover, a.button:hover { transform: translateY(-1px); }
+.submit-row { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; }
+.object-tools a { border-radius: 999px; }
+
+#changelist-filter { background: rgba(15,28,33,.6); border-radius: 18px; border: 1px solid rgba(255,255,255,.08); }
+#changelist-filter h2 { background: transparent; }
+#changelist .actions { background: rgba(255,255,255,.02); border-radius: 12px; }
+#result_list thead th { background: rgba(255,255,255,.03); color: #8FA3A6; font: 500 .7rem 'Onest', sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+#result_list tbody tr:hover { background: rgba(95,212,196,.05); }
+
+ul.messagelist li { border-radius: 14px; margin: 0 12px 10px; color: #EEF2F1; background-image: none; }
+
+/* Login screen */
+body.login { display: grid; place-items: center; min-height: 100vh; }
+.login #container { background: rgba(15,28,33,.7); border: 1px solid rgba(255,255,255,.08); border-radius: 28px; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); }
+.login #header { margin: 0; border-radius: 0; border: 0; box-shadow: none; }
+.login .submit-row { background: transparent; border: 0; }

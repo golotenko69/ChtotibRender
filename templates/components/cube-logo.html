@@ -1,14 +1,11 @@
 {% comment %}
-Isometric print-layer cube — the site's visual signature.
+Layer-stack mark — the site's visual signature: four printed layers,
+the hot amber base and mint layers cooling towards the top.
 Usage: {% include "components/cube-logo.html" with size=32 %}
-Faces: top=teal (fresh layer), left=dark (shadow face), right=orange (accent/just-printed face).
 {% endcomment %}
-<svg width="{{ size|default:32 }}" height="{{ size|default:32 }}" viewBox="0 0 40 42" fill="none" class="cube-mark" aria-hidden="true">
-    <polygon points="20,1 39,11 20,21 1,11" fill="#4A7A88" />
-    <polygon points="1,11 20,21 20,41 1,31" fill="#1F3A42" />
-    <polygon points="39,11 39,31 20,41 20,21" fill="#FF7A1A" />
-    <polyline points="20,1 20,21" stroke="rgba(0,0,0,0.15)" stroke-width="0.6" />
-    <polyline points="20,21 1,11" stroke="rgba(0,0,0,0.12)" stroke-width="0.6" />
-    <polyline points="20,21 39,11" stroke="rgba(0,0,0,0.12)" stroke-width="0.6" />
-    <polyline points="20,21 20,41" stroke="rgba(0,0,0,0.15)" stroke-width="0.6" />
+<svg width="{{ size|default:32 }}" height="{{ size|default:32 }}" viewBox="0 0 26 26" fill="none" class="cube-mark" aria-hidden="true">
+    <rect x="3" y="18" width="20" height="3" rx="1.5" fill="#FF8A3D" />
+    <rect x="5" y="13" width="16" height="3" rx="1.5" fill="#7DBFB4" opacity=".9" />
+    <rect x="7" y="8" width="12" height="3" rx="1.5" fill="#7DBFB4" opacity=".6" />
+    <rect x="9" y="3" width="8" height="3" rx="1.5" fill="#7DBFB4" opacity=".35" />
 </svg>

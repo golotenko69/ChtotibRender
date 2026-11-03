@@ -3,29 +3,48 @@
 {% block page_title %}Дашборд{% endblock %}
 
 {% block content %}
+<section class="dash-hello dash-reveal">
+    <div>
+        <h2><span data-greeting>Добрый день</span>, <span class="serif">{{ request.user.get_username }}</span></h2>
+        <p>{% if new_total %}В очереди {{ new_total }} новых заявок — самое время их разобрать.{% else %}Новых заявок нет — очередь пуста.{% endif %}</p>
+    </div>
+    <div class="dash-hello__art" aria-hidden="true">
+        <span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="layer"></span>
+    </div>
+</section>
+
 <div class="dash-stats-grid">
-    <div class="dash-stat-card dash-stat-card--accent">
+    <div class="dash-stat-card dash-stat-card--accent dash-reveal">
         <div class="dash-stat-card__label">Новые заявки</div>
-        <div class="dash-stat-card__value">{{ new_total }}</div>
+        <div class="dash-stat-card__value" data-count="{{ new_total }}">{{ new_total }}</div>
+        <div class="dash-stat-card__bar"><i style="--w:100%"></i></div>
     </div>
-    <div class="dash-stat-card">
+    <div class="dash-stat-card dash-reveal" style="--d:.06s">
         <div class="dash-stat-card__label">В работе</div>
-        <div class="dash-stat-card__value">{{ in_progress_total }}</div>
+        <div class="dash-stat-card__value" data-count="{{ in_progress_total }}">{{ in_progress_total }}</div>
+        <div class="dash-stat-card__bar"><i style="--w:70%"></i></div>
     </div>
-    <div class="dash-stat-card">
+    <div class="dash-stat-card dash-reveal" style="--d:.12s">
         <div class="dash-stat-card__label">Завершено</div>
-        <div class="dash-stat-card__value">{{ completed_total }}</div>
+        <div class="dash-stat-card__value" data-count="{{ completed_total }}">{{ completed_total }}</div>
+        <div class="dash-stat-card__bar"><i style="--w:85%"></i></div>
     </div>
-    <div class="dash-stat-card dash-stat-card--dark">
+    <div class="dash-stat-card dash-stat-card--dark dash-reveal" style="--d:.18s">
         <div class="dash-stat-card__label">Товаров в каталоге</div>
-        <div class="dash-stat-card__value">{{ products_total }}</div>
+        <div class="dash-stat-card__value" data-count="{{ products_total }}">{{ products_total }}</div>
+        <div class="dash-stat-card__bar"><i style="--w:55%"></i></div>
     </div>
 </div>
 
 <div class="dash-queue-grid">
     {% for s in stats %}
-    <div class="dash-queue-card">
+    <div class="dash-queue-card dash-reveal" style="--d:.{{ forloop.counter }}s">
         <h3>{{ s.label }}</h3>
+        <div class="dash-queue-card__layers" aria-hidden="true">
+            <i style="flex:{{ s.new|default:0 }} 0 0;background:#7DBFB4;"></i>
+            <i style="flex:{{ s.in_progress|default:0 }} 0 0;background:#FF8A3D;"></i>
+            <i style="flex:{{ s.done|default:0 }} 0 0;background:#4FD89A;"></i>
+        </div>
         <div class="dash-queue-card__row"><span>Новые</span><strong>{{ s.new }}</strong></div>
         <div class="dash-queue-card__row"><span>В работе</span><strong>{{ s.in_progress }}</strong></div>
         <div class="dash-queue-card__row"><span>Завершено</span><strong>{{ s.done }}</strong></div>
@@ -33,8 +52,12 @@
         <a href="{{ s.list_url }}" class="dbtn dbtn--outline dbtn--sm" style="margin-top:10px;">Открыть все</a>
     </div>
     {% endfor %}
-    <div class="dash-queue-card">
+    <div class="dash-queue-card dash-reveal" style="--d:.4s">
         <h3>Каталог</h3>
+        <div class="dash-queue-card__layers" aria-hidden="true">
+            <i style="flex:{{ products_total|default:0 }} 0 0;background:#7DBFB4;"></i>
+            <i style="flex:{{ products_out_of_stock|default:0 }} 0 0;background:#FF6B6B;"></i>
+        </div>
         <div class="dash-queue-card__row"><span>Всего товаров</span><strong>{{ products_total }}</strong></div>
         <div class="dash-queue-card__row"><span>Нет в наличии</span><strong>{{ products_out_of_stock }}</strong></div>
         <div class="dash-queue-card__row"><span>Категорий</span><strong>{{ categories_total }}</strong></div>
@@ -42,7 +65,7 @@
     </div>
 </div>
 
-<div class="dash-panel">
+<div class="dash-panel dash-reveal">
     <h2 class="dash-section-title">Последняя активность</h2>
     {% if recent_feed %}
         <div class="dash-table-wrap">

@@ -1,22 +1,28 @@
 {% load static %}<!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A1216">
     <title>{% block title %}Чтотиб Render — 3D-печать и 3D-сканирование{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Готовые изделия, печать ваших 3D-моделей и профессиональное 3D-сканирование.{% endblock %}">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <meta property="og:title" content="{% block og_title %}3D-печать и 3D-сканирование{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Готовые изделия, печать моделей на заказ и 3D-сканирование объектов.{% endblock %}">
     <meta property="og:type" content="website">
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <div class="print-progress" aria-hidden="true"></div>
+
     {% include "components/navbar.html" %}
 
     {% if messages %}
-        <div class="alerts-wrap container">
+        <div class="alerts-wrap" role="status">
             {% for message in messages %}
                 {% include "components/alert.html" with message=message %}
             {% endfor %}

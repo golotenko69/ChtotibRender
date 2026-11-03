@@ -3,44 +3,58 @@
 {% block title %}Ваша заявка — Чтотиб Render{% endblock %}
 
 {% block content %}
-<section class="section section--warm">
+<section class="page-hero bg-parts" style="padding-bottom:40px;">
+    <div class="page-hero__floor" aria-hidden="true"></div>
     <div class="container narrow">
-        <span class="section-label">Заявка</span>
-        <h1 class="extrude-line" style="margin-bottom:36px;">Ваша заявка</h1>
+        <span class="section-label" data-reveal>Заявка</span>
+        <h1 class="split-words" data-split>Ваша <span class="serif">заявка</span></h1>
+    </div>
+</section>
 
+<section class="section" style="padding-top:10px;">
+    <div class="container narrow">
         {% if cart.is_empty %}
-            <p class="empty-state">Заявка пуста. <a href="{% url 'products:catalog' %}">Перейти в каталог</a></p>
+            <div class="empty-state" data-reveal>
+                <p style="margin:0 0 18px;">Заявка пуста — самое время что-нибудь напечатать.</p>
+                <a href="{% url 'products:catalog' %}" class="btn btn--primary">Перейти в каталог</a>
+            </div>
         {% else %}
-            <table class="cart-table">
-                <thead>
-                    <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
-                </thead>
-                <tbody>
-                    {% for entry in cart %}
-                    <tr>
-                        <td><a href="{{ entry.product.get_absolute_url }}">{{ entry.product.name }}</a></td>
-                        <td>{{ entry.product.price|floatformat:0|intcomma }} ₽</td>
-                        <td>
-                            <form method="post" action="{% url 'orders:cart_update' entry.product.id %}" class="cart-table__qty-form">
-                                {% csrf_token %}
-                                <input type="number" name="quantity" value="{{ entry.quantity }}" min="1" class="form-input form-input--qty" onchange="this.form.submit()">
-                            </form>
-                        </td>
-                        <td>{{ entry.subtotal|floatformat:0|intcomma }} ₽</td>
-                        <td>
-                            <form method="post" action="{% url 'orders:cart_remove' entry.product.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn--sm btn--outline">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="cart-list">
+                {% for entry in cart %}
+                <div class="cart-item" data-reveal style="--d:{{ forloop.counter0 }}00ms">
+                    <a href="{{ entry.product.get_absolute_url }}" class="cart-item__thumb">
+                        {% if entry.product.main_image %}<img src="{{ entry.product.main_image.url }}" alt="">{% else %}{% include "components/cube-logo.html" with size=40 %}{% endif %}
+                    </a>
+                    <div>
+                        <a href="{{ entry.product.get_absolute_url }}" class="cart-item__name">{{ entry.product.name }}</a>
+                        <span class="cart-item__meta">{{ entry.product.price|floatformat:0|intcomma }} ₽ / шт</span>
+                    </div>
+                    <form method="post" action="{% url 'orders:cart_update' entry.product.id %}" class="qty" data-qty>
+                        {% csrf_token %}
+                        <button type="button" data-step="-1" aria-label="Меньше">−</button>
+                        <input type="number" name="quantity" value="{{ entry.quantity }}" min="1" onchange="this.form.submit()" aria-label="Количество">
+                        <button type="button" data-step="1" aria-label="Больше">+</button>
+                    </form>
+                    <span class="price">{{ entry.subtotal|floatformat:0|intcomma }} ₽</span>
+                    <form method="post" action="{% url 'orders:cart_remove' entry.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="cart-remove" aria-label="Удалить {{ entry.product.name }}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
 
-            <div class="cart-summary">
-                <div class="cart-summary__total">Итого: {{ cart.get_total_price|floatformat:0|intcomma }} ₽</div>
-                <a href="{% url 'orders:checkout' %}" class="btn btn--primary btn--lg">Оформить заявку</a>
+            <div aria-hidden="true" class="layers-sep" style="margin-bottom:22px;"></div>
+
+            <div class="cart-summary" data-reveal>
+                <div class="cart-summary__total">
+                    <span class="mono" style="font-size:.7rem;color:var(--muted-2);">Итого</span>
+                    <span class="price">{{ cart.get_total_price|floatformat:0|intcomma }} ₽</span>
+                </div>
+                <a href="{% url 'orders:checkout' %}" class="btn btn--primary btn--lg">Оформить заявку
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
             <p class="form-hint" style="margin-top:14px;">Итоговая стоимость и сроки будут уточнены менеджером после обработки заявки.</p>
         {% endif %}
