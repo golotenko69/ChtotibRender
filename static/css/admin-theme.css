@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
 
 /* Django admin re-skinned in the Чтотиб Render print-chamber palette.
    Overrides admin's CSS variables for both of its colour schemes. */
@@ -44,8 +44,8 @@ html, html[data-theme="light"], html[data-theme="dark"] {
     --object-tools-fg: #1A0D04;
     --object-tools-bg: #FF8A3D;
     --object-tools-hover-bg: #FFB066;
-    --font-family-primary: 'Manrope', system-ui, sans-serif;
-    --font-family-monospace: 'JetBrains Mono', ui-monospace, monospace;
+    --font-family-primary: 'Onest', system-ui, sans-serif;
+    --font-family-monospace: 'Onest', system-ui, sans-serif;
 }
 
 body {
@@ -61,19 +61,19 @@ body {
    
     border: 1px solid rgba(255,255,255,.08); box-shadow: 0 20px 40px -24px rgba(0,0,0,.7);
 }
-#site-name .crt-brand { display: inline-flex; align-items: center; gap: 10px; color: #EEF2F1; font: 700 1rem 'Unbounded', sans-serif; letter-spacing: -0.02em; text-transform: uppercase; }
+#site-name .crt-brand { display: inline-flex; align-items: center; gap: 10px; color: #EEF2F1; font: 700 1rem 'Onest', sans-serif; letter-spacing: -0.02em; text-transform: uppercase; }
 #site-name .crt-brand em { font-style: normal; color: #FFB066; }
-#site-name .crt-brand small { font: 500 .6rem 'JetBrains Mono', monospace; letter-spacing: .12em; color: #8FA3A6; margin-left: 6px; }
+#site-name .crt-brand small { font: 500 .6rem 'Onest', sans-serif; letter-spacing: .12em; color: #8FA3A6; margin-left: 6px; }
 #user-tools a { border-bottom: 0; }
 .crt-to-dash { display: inline-block; margin-right: 18px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(95,212,196,.35); font-size: .78rem; color: #9BE7DC !important; }
 
 div.breadcrumbs { margin: 0 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); padding: 10px 18px; }
 #content { padding: 24px 28px; }
-h1, h2 { font-family: 'Unbounded', sans-serif; letter-spacing: -0.02em; }
+h1, h2 { font-family: 'Onest', sans-serif; letter-spacing: -0.02em; }
 #content h1 { color: #EEF2F1; font-weight: 700; }
 
 .module, #changelist, .inline-group, fieldset.module { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
-.module h2, .module caption, .inline-group h2 { background: linear-gradient(90deg, rgba(95,212,196,.14), rgba(95,212,196,.02)); color: #EEF2F1; font: 600 .78rem 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 12px 16px; }
+.module h2, .module caption, .inline-group h2 { background: linear-gradient(90deg, rgba(95,212,196,.14), rgba(95,212,196,.02)); color: #EEF2F1; font: 600 .78rem 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 12px 16px; }
 #nav-sidebar { background: rgba(15,28,33,.6); border-right: 1px solid rgba(255,255,255,.06); }
 #nav-sidebar .current-model { background: rgba(255,138,61,.12); }
 
@@ -93,7 +93,7 @@ input:focus, textarea:focus, select:focus { border-color: #5FD4C4 !important; bo
 #changelist-filter { background: rgba(15,28,33,.6); border-radius: 18px; border: 1px solid rgba(255,255,255,.08); }
 #changelist-filter h2 { background: transparent; }
 #changelist .actions { background: rgba(255,255,255,.02); border-radius: 12px; }
-#result_list thead th { background: rgba(255,255,255,.03); color: #8FA3A6; font: 500 .7rem 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .06em; }
+#result_list thead th { background: rgba(255,255,255,.03); color: #8FA3A6; font: 500 .7rem 'Onest', sans-serif; text-transform: uppercase; letter-spacing: .06em; }
 #result_list tbody tr:hover { background: rgba(95,212,196,.05); }
 
 ul.messagelist li { border-radius: 14px; margin: 0 12px 10px; color: #EEF2F1; background-image: none; }
