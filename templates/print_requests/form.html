@@ -22,7 +22,7 @@
             {% csrf_token %}
             {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
 
-            <span class="section-label">01 / Модель</span>
+            <span class="section-label">Модель</span>
             <div class="form-field">
                 <label>3D-файл модели (STL, OBJ, 3MF, STEP, STP)</label>
                 {% include "components/file-upload.html" with field=form.model_file zone_id="model-file-upload" hint="до 100 МБ" %}
@@ -43,7 +43,7 @@
             </div>
 
             <div aria-hidden="true" class="layers-sep" style="margin:10px 0 26px;"></div>
-            <span class="section-label">02 / Контакты</span>
+            <span class="section-label">Контакты</span>
             <div class="form-grid">
                 {% include "components/forms.html" with field=form.name %}
                 {% include "components/forms.html" with field=form.phone %}

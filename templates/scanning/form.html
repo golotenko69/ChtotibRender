@@ -22,7 +22,7 @@
             {% csrf_token %}
             {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
 
-            <span class="section-label">01 / Объект</span>
+            <span class="section-label">Объект</span>
             <div class="form-field">
                 <label>Фотографии объекта *</label>
                 {% include "components/file-upload.html" with field=form.photos zone_id="scan-photos-upload" hint="JPG, PNG, WEBP, от 1 до 10 файлов" %}
@@ -43,7 +43,7 @@
             </div>
 
             <div aria-hidden="true" class="layers-sep" style="margin:10px 0 26px;"></div>
-            <span class="section-label">02 / Контакты</span>
+            <span class="section-label">Контакты</span>
             <div class="form-grid">
                 {% include "components/forms.html" with field=form.name %}
                 {% include "components/forms.html" with field=form.phone %}
