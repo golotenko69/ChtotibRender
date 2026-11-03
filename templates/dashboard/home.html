@@ -41,7 +41,7 @@
     <div class="dash-queue-card dash-reveal" style="--d:.{{ forloop.counter }}s">
         <h3>{{ s.label }}</h3>
         <div class="dash-queue-card__layers" aria-hidden="true">
-            <i style="flex:{{ s.new|default:0 }} 0 0;background:#5FD4C4;"></i>
+            <i style="flex:{{ s.new|default:0 }} 0 0;background:#7DBFB4;"></i>
             <i style="flex:{{ s.in_progress|default:0 }} 0 0;background:#FF8A3D;"></i>
             <i style="flex:{{ s.done|default:0 }} 0 0;background:#4FD89A;"></i>
         </div>
@@ -55,7 +55,7 @@
     <div class="dash-queue-card dash-reveal" style="--d:.4s">
         <h3>Каталог</h3>
         <div class="dash-queue-card__layers" aria-hidden="true">
-            <i style="flex:{{ products_total|default:0 }} 0 0;background:#5FD4C4;"></i>
+            <i style="flex:{{ products_total|default:0 }} 0 0;background:#7DBFB4;"></i>
             <i style="flex:{{ products_out_of_stock|default:0 }} 0 0;background:#FF6B6B;"></i>
         </div>
         <div class="dash-queue-card__row"><span>Всего товаров</span><strong>{{ products_total }}</strong></div>

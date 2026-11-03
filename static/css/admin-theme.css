@@ -4,7 +4,7 @@
    Overrides admin's CSS variables for both of its colour schemes. */
 html, html[data-theme="light"], html[data-theme="dark"] {
     color-scheme: dark;
-    --primary: #5FD4C4;
+    --primary: #7DBFB4;
     --secondary: #0F1C21;
     --accent: #FFB066;
     --primary-fg: #EEF2F1;
@@ -18,10 +18,10 @@ html, html[data-theme="light"], html[data-theme="dark"] {
     --header-bg: rgba(15,28,33,.85);
     --header-link-color: #C9D4D3;
     --breadcrumbs-fg: #8FA3A6;
-    --breadcrumbs-link-fg: #5FD4C4;
+    --breadcrumbs-link-fg: #7DBFB4;
     --breadcrumbs-bg: rgba(255,255,255,.03);
-    --link-fg: #5FD4C4;
-    --link-hover-color: #9BE7DC;
+    --link-fg: #7DBFB4;
+    --link-hover-color: #A9D6CE;
     --link-selected-fg: #FFB066;
     --hairline-color: rgba(255,255,255,.08);
     --border-color: rgba(255,255,255,.14);
@@ -50,7 +50,7 @@ html, html[data-theme="light"], html[data-theme="dark"] {
 
 body {
     background:
-        radial-gradient(700px 500px at 90% -10%, rgba(255,138,61,.12), transparent 70%),
+        radial-gradient(700px 500px at 90% -10%, rgba(255,138,61,.05), transparent 70%),
         radial-gradient(600px 500px at 0% 110%, rgba(95,212,196,.07), transparent 70%),
         #0A1216 fixed;
 }
@@ -65,7 +65,7 @@ body {
 #site-name .crt-brand em { font-style: normal; color: #FFB066; }
 #site-name .crt-brand small { font: 500 .6rem 'Onest', sans-serif; letter-spacing: .12em; color: #8FA3A6; margin-left: 6px; }
 #user-tools a { border-bottom: 0; }
-.crt-to-dash { display: inline-block; margin-right: 18px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(95,212,196,.35); font-size: .78rem; color: #9BE7DC !important; }
+.crt-to-dash { display: inline-block; margin-right: 18px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(95,212,196,.35); font-size: .78rem; color: #A9D6CE !important; }
 
 div.breadcrumbs { margin: 0 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); padding: 10px 18px; }
 #content { padding: 24px 28px; }
@@ -81,7 +81,7 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
     background: rgba(255,255,255,.04); color: #EEF2F1; border: 1px solid rgba(255,255,255,.14); border-radius: 10px; padding: 8px 12px;
     transition: border-color .25s, box-shadow .25s;
 }
-input:focus, textarea:focus, select:focus { border-color: #5FD4C4 !important; box-shadow: 0 0 0 3px rgba(95,212,196,.12); outline: none; }
+input:focus, textarea:focus, select:focus { border-color: #7DBFB4 !important; box-shadow: 0 0 0 3px rgba(95,212,196,.12); outline: none; }
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     border-radius: 999px; font-weight: 600; transition: transform .25s, box-shadow .25s, background .25s;

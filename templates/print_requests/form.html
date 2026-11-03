@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Заказать печать своей модели — Чтотиб Render{% endblock %}
 
 {% block content %}
-<section class="page-hero">
+<section class="page-hero bg-parts">
     <div class="page-hero__floor" aria-hidden="true"></div>
-    <div class="orb orb--amber" aria-hidden="true" style="right:8%;top:30px;width:560px;height:560px;"></div>
+    <img class="page-hero__illu" src="{% static 'img/filament-spool.svg' %}" alt="" aria-hidden="true">
     <div class="container narrow">
         <div class="service-card__icon" data-reveal="zoom">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
