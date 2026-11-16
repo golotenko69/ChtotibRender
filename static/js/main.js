@@ -295,6 +295,35 @@
         });
     }
 
+    // Copy buttons, e.g. the request number on the success page.
+    function initCopyButtons() {
+        document.querySelectorAll("[data-copy]").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                var value = btn.getAttribute("data-copy");
+                var label = btn.querySelector("span");
+                var done = function () {
+                    if (!label) return;
+                    var original = label.textContent;
+                    label.textContent = btn.getAttribute("data-copy-done") || "Скопировано";
+                    setTimeout(function () { label.textContent = original; }, 2000);
+                };
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(value).then(done);
+                } else {
+                    var tmp = document.createElement("textarea");
+                    tmp.value = value;
+                    tmp.setAttribute("readonly", "");
+                    tmp.style.position = "fixed";
+                    tmp.style.opacity = "0";
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    try { document.execCommand("copy"); done(); } catch (e) { /* ignore */ }
+                    tmp.remove();
+                }
+            });
+        });
+    }
+
     function initCartBump() {
         var count = document.querySelector(".navbar__cart-count");
         if (!count || !document.querySelector(".alert--success")) return;
@@ -315,6 +344,7 @@
         initQty();
         initGallery();
         initCartBump();
+        initCopyButtons();
 
         // Auto-dismiss alerts after a few seconds.
         document.querySelectorAll(".alert").forEach(function (alertEl) {

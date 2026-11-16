@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.core.emails import send_scanning_request_emails
+from apps.core.contacts import request_message, shop_contacts
 from apps.core.security import remember_submitted_request, submitted_in_this_session
 
 from .forms import ScanningRequestForm
@@ -32,4 +33,8 @@ def success(request, request_number):
     if not submitted_in_this_session(request, request_number):
         raise Http404
     scan_request = get_object_or_404(ScanningRequest, request_number=request_number)
-    return render(request, "orders/success.html", {"object": scan_request, "kind": "3D-сканирование"})
+    return render(request, "orders/success.html", {
+        "object": scan_request,
+        "kind": "3D-сканирование",
+        "contact": shop_contacts(request_message(scan_request.request_number)),
+    })

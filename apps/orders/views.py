@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.core.emails import send_order_request_emails
+from apps.core.contacts import request_message, shop_contacts
 from apps.core.security import remember_submitted_request, safe_redirect_target, submitted_in_this_session
 from apps.products.models import Product
 
@@ -87,4 +88,8 @@ def success(request, request_number):
     if not submitted_in_this_session(request, request_number):
         raise Http404
     order_request = get_object_or_404(OrderRequest, request_number=request_number)
-    return render(request, "orders/success.html", {"object": order_request, "kind": "товары"})
+    return render(request, "orders/success.html", {
+        "object": order_request,
+        "kind": "товары",
+        "contact": shop_contacts(request_message(order_request.request_number)),
+    })

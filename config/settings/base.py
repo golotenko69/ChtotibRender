@@ -57,6 +57,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.cart",
+                "apps.core.context_processors.shop_contacts",
                 "apps.dashboard.context_processors.nav_counts",
             ],
         },
@@ -127,6 +128,18 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 DATA_UPLOAD_MAX_NUMBER_FILES = 20
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+# ---------------------------------------------------------------------------
+# Shop contacts shown to clients (success page, contacts page, footer,
+# e-mails). Telegram is a username without @; if empty, the Telegram
+# link opens a chat by phone number. WhatsApp defaults to SHOP_PHONE.
+# ---------------------------------------------------------------------------
+SHOP_PHONE = os.environ.get("SHOP_PHONE", "+7 (900) 000-00-00")
+SHOP_EMAIL = os.environ.get("SHOP_EMAIL", "hello@3dprint.example")
+SHOP_TELEGRAM = os.environ.get("SHOP_TELEGRAM", "")
+SHOP_WHATSAPP = os.environ.get("SHOP_WHATSAPP", "")
+SHOP_ADDRESS = os.environ.get("SHOP_ADDRESS", "г. Москва, ул. Примерная, д. 1")
+SHOP_HOURS = os.environ.get("SHOP_HOURS", "Пн–Пт: 10:00–19:00")
 
 # ---------------------------------------------------------------------------
 # Email

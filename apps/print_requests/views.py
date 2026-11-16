@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.core.emails import send_print_request_emails
+from apps.core.contacts import request_message, shop_contacts
 from apps.core.security import remember_submitted_request, submitted_in_this_session
 
 from .forms import CustomPrintRequestForm
@@ -26,4 +27,8 @@ def success(request, request_number):
     if not submitted_in_this_session(request, request_number):
         raise Http404
     print_request = get_object_or_404(CustomPrintRequest, request_number=request_number)
-    return render(request, "orders/success.html", {"object": print_request, "kind": "печать модели"})
+    return render(request, "orders/success.html", {
+        "object": print_request,
+        "kind": "печать модели",
+        "contact": shop_contacts(request_message(print_request.request_number)),
+    })
