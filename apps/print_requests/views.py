@@ -1,4 +1,3 @@
-from django.db import transaction
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -6,19 +5,14 @@ from apps.core.emails import send_print_request_emails
 from apps.core.security import remember_submitted_request, submitted_in_this_session
 
 from .forms import CustomPrintRequestForm
-from .models import CustomPrintRequest, PrintRequestPhoto
+from .models import CustomPrintRequest
 
 
 def custom_print_request(request):
     if request.method == "POST":
-        form = CustomPrintRequestForm(request.POST, request.FILES)
+        form = CustomPrintRequestForm(request.POST)
         if form.is_valid():
-            with transaction.atomic():
-                photos = form.cleaned_data.pop("photos", [])
-                print_request = form.save()
-                PrintRequestPhoto.objects.bulk_create([
-                    PrintRequestPhoto(request=print_request, image=photo) for photo in photos
-                ])
+            print_request = form.save()
             remember_submitted_request(request, print_request.request_number)
             send_print_request_emails(print_request)
             return redirect("print_requests:success", request_number=print_request.request_number)

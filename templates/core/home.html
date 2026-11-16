@@ -22,7 +22,7 @@
             </div>
             <div class="hero__chips" data-reveal style="--d:.65s">
                 <a href="{% url 'products:catalog' %}" class="chip">Готовые изделия</a>
-                <a href="{% url 'print_requests:form' %}" class="chip">Печать по файлу</a>
+                <a href="{% url 'print_requests:form' %}" class="chip">Печать вашей модели</a>
                 <a href="{% url 'scanning:form' %}" class="chip">3D-сканирование</a>
                 <a href="{% url 'core:contact' %}" class="chip">Консультация</a>
             </div>
@@ -106,8 +106,8 @@
             <a href="{% url 'print_requests:form' %}" class="promo-card" data-reveal>
                 <svg class="promo-card__file" width="54" height="66" viewBox="0 0 64 78" aria-hidden="true"><path d="M4 4h38l18 18v52H4z" fill="#152730" stroke="#7DBFB4" stroke-width="1.5"/><path d="M42 4v18h18" fill="none" stroke="#7DBFB4" stroke-width="1.5"/><g stroke="rgba(95,212,196,.5)"><path d="M14 44h36M14 50h36M14 56h28"/></g></svg>
                 <span class="mono" style="font-size:.7rem;color:var(--amber-3);">Нет нужной модели?</span>
-                <span class="promo-card__title">Пришлите файл — <span class="serif">напечатаем</span></span>
-                <span class="link-arrow">STL · OBJ · 3MF · STEP <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="promo-card__title">Пришлите ссылку — <span class="serif">напечатаем</span></span>
+                <span class="link-arrow">Thingiverse · Printables · облако <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </a>
         </div>
     </div>
@@ -179,14 +179,14 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFB066" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     </div>
                     <h3>Напечатаем <span class="serif">вашу модель</span></h3>
-                    <p>Загрузите STL, OBJ, 3MF, STEP или STP — подберём материал, рассчитаем стоимость и изготовим деталь любой сложности.</p>
+                    <p>Пришлите ссылку на модель — подберём материал, рассчитаем стоимость и изготовим деталь любой сложности.</p>
                     <ul>
                         <li>PLA, PETG, ABS, TPU и другие материалы</li>
                         <li>Точность печати ±0.2 мм</li>
                         <li>Рабочий стол до 220×220×250 мм</li>
                         <li>Постобработка по запросу</li>
                     </ul>
-                    <a href="{% url 'print_requests:form' %}" class="btn btn--primary">Отправить файл
+                    <a href="{% url 'print_requests:form' %}" class="btn btn--primary">Оставить заявку
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </div>
             </div>
@@ -236,7 +236,7 @@
             </div>
             <div class="faq-item" data-reveal style="--d:.06s">
                 <button class="faq-item__q" aria-expanded="false"><span>Какие форматы 3D-моделей вы принимаете?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-                <div class="faq-item__a"><p>STL, OBJ, 3MF, STEP, STP, а также ссылку на файл, если он размещён в облаке.</p></div>
+                <div class="faq-item__a"><p>Пришлите ссылку на файл STL, OBJ, 3MF или STEP — например, с Thingiverse, Printables, Google Диска или Яндекс Диска.</p></div>
             </div>
             <div class="faq-item" data-reveal style="--d:.12s">
                 <button class="faq-item__q" aria-expanded="false"><span>Сколько стоит 3D-печать?</span><span class="faq-item__icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
@@ -261,11 +261,11 @@
             <div style="position:relative;">
                 <span class="section-label">Начнём</span>
                 <h2>Своя модель? Напечатаем <span class="serif">слой за слоем</span></h2>
-                <p style="margin:0;max-width:460px;">Загрузите файл или опишите объект — инженер проверит модель и напишет, если что-то стоит поправить.</p>
+                <p style="margin:0;max-width:460px;">Пришлите ссылку на модель или фото объекта — инженер всё проверит и свяжется с вами.</p>
             </div>
             <div class="cta-band__actions">
                 <a href="{% url 'print_requests:form' %}" class="btn btn--primary btn--lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Загрузить модель</a>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Заказать печать</a>
                 <a href="{% url 'scanning:form' %}" class="btn btn--outline btn--lg">Заказать сканирование</a>
             </div>
         </div>

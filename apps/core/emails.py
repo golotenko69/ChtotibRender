@@ -88,7 +88,7 @@ def send_scanning_request_emails(scan_request):
     message_admin = (
         f"Новая заявка на 3D-сканирование: {scan_request.request_number}\n"
         f"Клиент: {scan_request.name}, тел. {scan_request.phone}\n"
-        f"Объект: {scan_request.object_name}\n"
+        f"Объект: {scan_request.object_name or '—'}\n"
         f"Откройте Django Admin для подробностей."
     )
     _safe_send(subject_admin, message_admin, _admin_recipients())

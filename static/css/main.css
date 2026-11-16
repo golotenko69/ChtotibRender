@@ -486,6 +486,9 @@ a:hover .cube-mark rect:nth-child(4) { transform: translateX(3px); }
 .form { display: flex; flex-direction: column; gap: 4px; max-width: 100%; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
 .form-grid .form-field--full { grid-column: 1 / -1; }
+.form--compact { max-width: 680px; margin: 0 auto; padding: 32px; }
+.form--compact .form-field { margin-bottom: 14px; }
+.form--compact .btn { width: 100%; margin-top: 6px; }
 .form-field { margin-bottom: 18px; }
 .form-field label { display: block; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 9px; transition: color .25s; }
 .form-field:focus-within > label { color: var(--mint); }

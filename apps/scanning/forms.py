@@ -31,6 +31,9 @@ class MultiImageField(forms.FileField):
 
 
 class ScanningRequestForm(forms.ModelForm):
+    """Short public form: contacts, quantity and photos of the object.
+    Size, format and post-processing are agreed with the manager later."""
+
     photos = MultiImageField(
         required=True,
         label="Фотографии объекта",
@@ -39,21 +42,16 @@ class ScanningRequestForm(forms.ModelForm):
 
     class Meta:
         model = ScanningRequest
-        fields = [
-            "name", "phone", "email", "object_name", "description", "dimensions",
-            "quantity", "city", "deadline", "scanning_only", "post_processing",
-            "output_format", "comment",
-        ]
+        fields = ["name", "phone", "email", "quantity"]
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-input", "placeholder": "Ваше имя"}),
-            "phone": forms.TextInput(attrs={"class": "form-input", "placeholder": "+7 900 000-00-00"}),
-            "email": forms.EmailInput(attrs={"class": "form-input", "placeholder": "email@example.com"}),
-            "object_name": forms.TextInput(attrs={"class": "form-input", "placeholder": "Например, статуэтка"}),
-            "description": forms.Textarea(attrs={"class": "form-textarea", "rows": 4}),
-            "dimensions": forms.TextInput(attrs={"class": "form-input", "placeholder": "например, 20×15×10 см"}),
-            "quantity": forms.NumberInput(attrs={"class": "form-input", "min": 1}),
-            "city": forms.TextInput(attrs={"class": "form-input", "placeholder": "Город"}),
-            "deadline": forms.DateInput(attrs={"class": "form-input", "type": "date"}),
-            "output_format": forms.Select(attrs={"class": "form-select"}),
-            "comment": forms.Textarea(attrs={"class": "form-textarea", "rows": 3}),
+            "name": forms.TextInput(attrs={"class": "form-input", "placeholder": "Ваше имя", "autocomplete": "name"}),
+            "phone": forms.TextInput(attrs={"class": "form-input", "placeholder": "+7 900 000-00-00", "autocomplete": "tel", "inputmode": "tel"}),
+            "email": forms.EmailInput(attrs={"class": "form-input", "placeholder": "email@example.com", "autocomplete": "email"}),
+            "quantity": forms.NumberInput(attrs={"class": "form-input", "min": 1, "max": 1000}),
         }
+        labels = {"email": "Почта", "quantity": "Количество объектов"}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name in ("name", "phone", "email"):
+            self.fields[name].required = True
