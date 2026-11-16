@@ -133,10 +133,11 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Shop contacts shown to clients (success page, contacts page, footer,
 # e-mails). Telegram is a username without @; if empty, the Telegram
 # link opens a chat by phone number. WhatsApp defaults to SHOP_PHONE.
+# The defaults are placeholders: set real values in .env before launch.
 # ---------------------------------------------------------------------------
 SHOP_PHONE = os.environ.get("SHOP_PHONE", "+7 (900) 000-00-00")
-SHOP_EMAIL = os.environ.get("SHOP_EMAIL", "hello@3dprint.example")
-SHOP_TELEGRAM = os.environ.get("SHOP_TELEGRAM", "")
+SHOP_EMAIL = os.environ.get("SHOP_EMAIL", "manager@chtotib-render.example")
+SHOP_TELEGRAM = os.environ.get("SHOP_TELEGRAM", "chtotib_render_test_bot")
 SHOP_WHATSAPP = os.environ.get("SHOP_WHATSAPP", "")
 SHOP_ADDRESS = os.environ.get("SHOP_ADDRESS", "г. Москва, ул. Примерная, д. 1")
 SHOP_HOURS = os.environ.get("SHOP_HOURS", "Пн–Пт: 10:00–19:00")
