@@ -44,7 +44,7 @@ class TestDashboardAccess:
         assert response.url == reverse("dashboard:home")
 
     def test_logout_redirects_to_login(self, staff_client):
-        response = staff_client.get(reverse("dashboard:logout"))
+        response = staff_client.post(reverse("dashboard:logout"))
         assert response.status_code == 302
         assert response.url == reverse("dashboard:login")
 
@@ -152,11 +152,10 @@ class TestRequestQueueManagement:
         assert order.status == "CONTACTED"
         assert order.admin_comment == "Позвонили клиенту"
 
-    def test_staff_can_set_estimated_price_on_print_request(self, staff_client, client, sample_stl):
+    def test_staff_can_set_estimated_price_on_print_request(self, staff_client, client):
         client.post(reverse("print_requests:form"), {
-            "name": "Иван", "phone": "+79001234567", "email": "", "project_name": "P",
-            "description": "d", "quantity": 1, "material": "PLA", "color": "", "deadline": "",
-            "model_url": "", "comment": "", "model_file": sample_stl,
+            "name": "Иван", "phone": "+79001234567", "email": "ivan@example.com", "quantity": 1,
+            "model_url": "https://example.com/m.stl",
         })
         from apps.print_requests.models import CustomPrintRequest
         req = CustomPrintRequest.objects.first()

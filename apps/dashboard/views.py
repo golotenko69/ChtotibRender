@@ -7,7 +7,9 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
+from apps.core.security import safe_redirect_target
 from apps.orders.models import OrderRequest
 from apps.print_requests.models import CustomPrintRequest
 from apps.products.models import Category, Product
@@ -41,16 +43,19 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             if not user.is_staff:
-                messages.error(request, "У этого аккаунта нет доступа к панели управления.")
+                # Same message as a wrong password: don't confirm that the
+                # credentials are valid for a non-staff account.
+                messages.error(request, "Неверный логин или пароль.")
             else:
                 auth_login(request, user)
-                next_url = request.POST.get("next") or request.GET.get("next") or reverse("dashboard:home")
-                return redirect(next_url)
+                next_url = request.POST.get("next") or request.GET.get("next")
+                return redirect(safe_redirect_target(request, next_url, reverse("dashboard:home")))
         else:
             messages.error(request, "Неверный логин или пароль.")
     return render(request, "dashboard/login.html", {"form": form})
 
 
+@require_POST
 def logout_view(request):
     auth_logout(request)
     messages.info(request, "Вы вышли из панели управления.")
@@ -206,12 +211,13 @@ def product_delete(request, pk):
     return render(request, "dashboard/product_confirm_delete.html", {"product": product, "active": "products"})
 
 
+@require_POST
 @staff_required
 def product_toggle_active(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.is_active = not product.is_active
     product.save(update_fields=["is_active"])
-    return redirect(request.META.get("HTTP_REFERER") or "dashboard:product_list")
+    return redirect(safe_redirect_target(request, request.META.get("HTTP_REFERER"), "dashboard:product_list"))
 
 
 # ---------------------------------------------------------------------------

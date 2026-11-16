@@ -1,15 +1,16 @@
 {% load humanize %}
-<article class="product-card">
-    <a href="{{ product.get_absolute_url }}" class="product-card__media">
+<article class="product-card" data-reveal>
+    <a href="{{ product.get_absolute_url }}" class="product-card__media" aria-label="{{ product.name }}">
         {% if product.main_image %}
             <img src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
         {% else %}
-            <div class="product-card__cube-placeholder">{% include "components/cube-logo.html" with size=64 %}</div>
+            <span class="product-card__pod" aria-hidden="true"></span>
+            <div class="product-card__cube-placeholder">{% include "components/cube-logo.html" with size=96 %}</div>
         {% endif %}
-        <span class="corner-brackets"><span></span><span></span><span></span><span></span></span>
+        <span class="corner-brackets" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
         {% if product.category %}<span class="product-card__category-tag">{{ product.category.name }}</span>{% endif %}
         {% if product.discount_percent %}
-            <span class="product-card__badge">-{{ product.discount_percent }}%</span>
+            <span class="product-card__badge">−{{ product.discount_percent }}%</span>
         {% endif %}
         {% if not product.is_in_stock %}
             <span class="product-card__badge product-card__badge--muted">Нет в наличии</span>
@@ -21,15 +22,16 @@
         {% if product.short_description %}<p class="product-card__desc">{{ product.short_description }}</p>{% endif %}
         <div class="product-card__meta-row">
             <span class="product-card__price">
-                {{ product.price|floatformat:0|intcomma }} ₽
-                {% if product.old_price %}<span class="product-card__old-price">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
+                {{ product.price|floatformat:0|intcomma }} ₽{% if product.old_price %}<span class="product-card__old-price">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
             </span>
+            <form method="post" action="{% url 'orders:cart_add' product.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="product-card__cta" aria-label="В заявку: {{ product.name }}" {% if not product.is_in_stock %}disabled{% endif %}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>В заявку</span>
+                </button>
+            </form>
         </div>
-        <form method="post" action="{% url 'orders:cart_add' product.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="quantity" value="1">
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" class="product-card__cta" {% if not product.is_in_stock %}disabled{% endif %}>Заказать</button>
-        </form>
     </div>
 </article>

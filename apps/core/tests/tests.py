@@ -35,21 +35,18 @@ class TestLegacyDashboardRedirect:
 
 
 class TestRequestNumberGenerator:
-    def test_numbers_do_not_collide_across_types(self, client, product, sample_stl, sample_image):
+    def test_numbers_do_not_collide_across_types(self, client, product, sample_image):
         client.post(reverse("orders:cart_add", args=[product.id]), {"quantity": 1})
         client.post(reverse("orders:checkout"), {"first_name": "A", "phone": "+79000000001"})
 
         client.post(reverse("print_requests:form"), {
-            "name": "B", "phone": "+79000000002", "email": "", "project_name": "P",
-            "description": "d", "quantity": 1, "material": "PLA", "color": "", "deadline": "",
-            "model_url": "", "comment": "", "model_file": sample_stl,
+            "name": "B", "phone": "+79000000002", "email": "b@example.com", "quantity": 1,
+            "model_url": "https://example.com/m.stl",
         })
 
         client.post(reverse("scanning:form"), {
-            "name": "C", "phone": "+79000000003", "email": "", "object_name": "O",
-            "description": "", "dimensions": "", "quantity": 1, "city": "", "deadline": "",
-            "scanning_only": "on", "post_processing": "", "output_format": "STL",
-            "comment": "", "photos": [sample_image],
+            "name": "C", "phone": "+79000000003", "email": "c@example.com", "quantity": 1,
+            "photos": [sample_image],
         })
 
         from apps.orders.models import OrderRequest

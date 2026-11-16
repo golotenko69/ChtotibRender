@@ -43,7 +43,7 @@ class CustomPrintRequest(RequestNumberMixin, models.Model):
     email = models.EmailField("Email", blank=True)
 
     project_name = models.CharField("Название проекта", max_length=255, blank=True)
-    description = models.TextField("Описание")
+    description = models.TextField("Описание", blank=True)
     quantity = models.PositiveIntegerField("Количество", default=1,
                                             validators=[MinValueValidator(1)])
     material = models.CharField("Материал", max_length=20, choices=Material.choices,

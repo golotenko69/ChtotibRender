@@ -13,10 +13,9 @@ MAX_ITEM_QUANTITY = 50
 class Cart:
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get(CART_SESSION_KEY)
-        if cart is None:
-            cart = self.session[CART_SESSION_KEY] = {}
-        self.cart = cart
+        # Reading the cart must not touch the session: otherwise every
+        # anonymous visit (bots, health checks) would create a session row.
+        self.cart = self.session.get(CART_SESSION_KEY) or {}
 
     def add(self, product: Product, quantity: int = 1, replace: bool = False):
         product_id = str(product.id)
@@ -37,7 +36,10 @@ class Cart:
 
     def update(self, product_id, quantity):
         product_id = str(product_id)
-        quantity = int(quantity)
+        try:
+            quantity = int(quantity)
+        except (TypeError, ValueError):
+            return
         if quantity <= 0:
             self.remove(product_id)
             return
@@ -59,7 +61,7 @@ class Cart:
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
+        products = Product.objects.active().filter(id__in=product_ids)
         products_map = {str(p.id): p for p in products}
         for product_id, item in self.cart.items():
             product = products_map.get(product_id)
@@ -76,4 +78,4 @@ class Cart:
         return sum((entry["subtotal"] for entry in self), Decimal("0"))
 
     def is_empty(self):
-        return len(self.cart) == 0
+        return not any(True for _ in self)

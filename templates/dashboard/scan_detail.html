@@ -42,7 +42,7 @@
             <h2 class="dash-section-title">Фотографии объекта</h2>
             <div class="dash-photo-grid">
                 {% for photo in scan_request.images.all %}
-                    <a href="{{ photo.image.url }}" target="_blank"><img src="{{ photo.image.url }}" alt=""></a>
+                    <a href="{{ photo.image.url }}" target="_blank" rel="noopener noreferrer"><img src="{{ photo.image.url }}" alt=""></a>
                 {% endfor %}
             </div>
         </div>

@@ -37,16 +37,16 @@
         <div class="dash-panel">
             <h2 class="dash-section-title">Файлы</h2>
             {% if print_request.model_file %}
-                <a href="{{ print_request.model_file.url }}" target="_blank" class="dash-file-pill">⬇ Скачать файл модели</a>
+                <a href="{{ print_request.model_file.url }}" target="_blank" rel="noopener noreferrer" class="dash-file-pill">⬇ Скачать файл модели</a>
             {% endif %}
             {% if print_request.model_url %}
-                <p style="margin-top:10px;"><strong>Ссылка на модель:</strong> <a href="{{ print_request.model_url }}" target="_blank">{{ print_request.model_url }}</a></p>
+                <p style="margin-top:10px;"><strong>Ссылка на модель:</strong> <a href="{{ print_request.model_url }}" target="_blank" rel="noopener noreferrer">{{ print_request.model_url }}</a></p>
             {% endif %}
             {% if print_request.photos.all %}
                 <h3 style="font-size:.9rem;margin:14px 0 4px;">Дополнительные фото</h3>
                 <div class="dash-photo-grid">
                     {% for photo in print_request.photos.all %}
-                        <a href="{{ photo.image.url }}" target="_blank"><img src="{{ photo.image.url }}" alt=""></a>
+                        <a href="{{ photo.image.url }}" target="_blank" rel="noopener noreferrer"><img src="{{ photo.image.url }}" alt=""></a>
                     {% endfor %}
                 </div>
             {% endif %}

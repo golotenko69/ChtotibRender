@@ -8,6 +8,8 @@ import logging
 from django.conf import settings
 from django.core.mail import send_mail
 
+from apps.core.contacts import request_message, shop_contacts
+
 logger = logging.getLogger("apps.core.emails")
 
 
@@ -26,6 +28,23 @@ def _safe_send(subject, message, recipient_list):
         logger.exception("Не удалось отправить email на %s", recipient_list)
 
 
+def _contact_block(request_number):
+    """How the client can reach the manager, with the request number."""
+    c = shop_contacts(request_message(request_number))
+    lines = ["", "", "Хотите написать менеджеру сами? Укажите номер заявки:"]
+    if c["phone"]:
+        lines.append(f"Телефон: {c['phone']}")
+    if c["telegram_url"]:
+        lines.append(f"Telegram: {c['telegram_url']}")
+    if c["whatsapp_url"]:
+        lines.append(f"WhatsApp: {c['whatsapp_url']}")
+    if c["email"]:
+        lines.append(f"Почта: {c['email']}")
+    if c["hours"]:
+        lines.append(f"Режим работы: {c['hours']}")
+    return "\n".join(lines) + "\n"
+
+
 def _admin_recipients():
     return [email for _, email in getattr(settings, "ADMINS", [])] or \
         ([settings.EMAIL_HOST_USER] if getattr(settings, "EMAIL_HOST_USER", "") else [])
@@ -38,6 +57,7 @@ def send_order_request_emails(order_request):
         f"Ваша заявка №{order_request.request_number} успешно принята.\n"
         f"Мы свяжемся с вами по телефону {order_request.phone} для уточнения деталей и стоимости.\n\n"
         f"Спасибо, что выбрали нас!"
+        + _contact_block(order_request.request_number)
     )
     if order_request.email:
         _safe_send(subject_client, message_client, [order_request.email])
@@ -59,6 +79,7 @@ def send_print_request_emails(print_request):
         f"Ваша заявка №{print_request.request_number} на печать 3D-модели принята.\n"
         f"Мы изучим модель и свяжемся с вами по телефону {print_request.phone}.\n\n"
         f"Спасибо!"
+        + _contact_block(print_request.request_number)
     )
     if print_request.email:
         _safe_send(subject_client, message_client, [print_request.email])
@@ -80,6 +101,7 @@ def send_scanning_request_emails(scan_request):
         f"Ваша заявка №{scan_request.request_number} на 3D-сканирование принята.\n"
         f"Мы свяжемся с вами по телефону {scan_request.phone}.\n\n"
         f"Спасибо!"
+        + _contact_block(scan_request.request_number)
     )
     if scan_request.email:
         _safe_send(subject_client, message_client, [scan_request.email])
@@ -88,7 +110,7 @@ def send_scanning_request_emails(scan_request):
     message_admin = (
         f"Новая заявка на 3D-сканирование: {scan_request.request_number}\n"
         f"Клиент: {scan_request.name}, тел. {scan_request.phone}\n"
-        f"Объект: {scan_request.object_name}\n"
+        f"Объект: {scan_request.object_name or '—'}\n"
         f"Откройте Django Admin для подробностей."
     )
     _safe_send(subject_admin, message_admin, _admin_recipients())

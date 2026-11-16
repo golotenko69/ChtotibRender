@@ -35,7 +35,7 @@ class ScanningRequest(RequestNumberMixin, models.Model):
     phone = models.CharField("Телефон", max_length=32, validators=[phone_validator])
     email = models.EmailField("Email", blank=True)
 
-    object_name = models.CharField("Название объекта", max_length=255)
+    object_name = models.CharField("Название объекта", max_length=255, blank=True)
     description = models.TextField("Описание", blank=True)
     dimensions = models.CharField("Примерные размеры", max_length=255, blank=True)
     quantity = models.PositiveIntegerField("Количество объектов", default=1,
