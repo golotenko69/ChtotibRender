@@ -177,10 +177,20 @@
     // Live layer counter in the hero chip, synced to the 9s print loop.
     function initLayerCounter() {
         var el = document.querySelector("[data-layer-counter]");
+        var hero = document.querySelector(".hero");
         if (!el || reduceMotion) return;
+        var visible = true;
+        // Pause the print loop (CSS animations and this counter) once the
+        // hero leaves the viewport, so it costs nothing while reading below.
+        if (hero && "IntersectionObserver" in window) {
+            new IntersectionObserver(function (entries) {
+                visible = entries[0].isIntersecting;
+                hero.classList.toggle("is-paused", !visible);
+            }).observe(hero);
+        }
         var start = Date.now();
         setInterval(function () {
-            if (document.hidden) return;
+            if (document.hidden || !visible) return;
             var t = ((Date.now() - start) / 9000) % 1;
             el.textContent = Math.round(Math.min(1, t / 0.68) * 640);
         }, 250);
