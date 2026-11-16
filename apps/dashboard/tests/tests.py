@@ -44,7 +44,7 @@ class TestDashboardAccess:
         assert response.url == reverse("dashboard:home")
 
     def test_logout_redirects_to_login(self, staff_client):
-        response = staff_client.get(reverse("dashboard:logout"))
+        response = staff_client.post(reverse("dashboard:logout"))
         assert response.status_code == 302
         assert response.url == reverse("dashboard:login")
 

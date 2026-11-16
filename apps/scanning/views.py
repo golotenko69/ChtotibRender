@@ -1,7 +1,9 @@
 from django.db import transaction
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.core.emails import send_scanning_request_emails
+from apps.core.security import remember_submitted_request, submitted_in_this_session
 
 from .forms import ScanningRequestForm
 from .models import ScanningRequest, ScanningRequestImage
@@ -17,6 +19,7 @@ def scanning_request(request):
                 ScanningRequestImage.objects.bulk_create([
                     ScanningRequestImage(request=scan_request, image=photo) for photo in photos
                 ])
+            remember_submitted_request(request, scan_request.request_number)
             send_scanning_request_emails(scan_request)
             return redirect("scanning:success", request_number=scan_request.request_number)
     else:
@@ -26,5 +29,7 @@ def scanning_request(request):
 
 
 def success(request, request_number):
+    if not submitted_in_this_session(request, request_number):
+        raise Http404
     scan_request = get_object_or_404(ScanningRequest, request_number=request_number)
     return render(request, "orders/success.html", {"object": scan_request, "kind": "3D-сканирование"})

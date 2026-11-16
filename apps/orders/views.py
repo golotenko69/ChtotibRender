@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.db import transaction
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.core.emails import send_order_request_emails
+from apps.core.security import remember_submitted_request, safe_redirect_target, submitted_in_this_session
 from apps.products.models import Product
 
 from .cart import Cart
@@ -27,8 +29,7 @@ def cart_add(request, product_id):
     cart = Cart(request)
     cart.add(product=product, quantity=quantity)
     messages.success(request, f"«{product.name}» добавлен в заявку.")
-    next_url = request.POST.get("next") or "orders:cart_detail"
-    return redirect(next_url)
+    return redirect(safe_redirect_target(request, request.POST.get("next"), "orders:cart_detail"))
 
 
 @require_POST
@@ -71,6 +72,7 @@ def checkout(request):
                     for entry in items
                 ])
             cart.clear()
+            remember_submitted_request(request, order_request.request_number)
             send_order_request_emails(order_request)
             return redirect("orders:success", request_number=order_request.request_number)
     else:
@@ -80,5 +82,9 @@ def checkout(request):
 
 
 def success(request, request_number):
+    # Request numbers are sequential; only the submitting session may see
+    # the confirmation (it contains the client's phone number).
+    if not submitted_in_this_session(request, request_number):
+        raise Http404
     order_request = get_object_or_404(OrderRequest, request_number=request_number)
     return render(request, "orders/success.html", {"object": order_request, "kind": "товары"})
